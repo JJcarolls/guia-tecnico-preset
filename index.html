@@ -118,6 +118,20 @@ body{background:linear-gradient(180deg,#faf8fb 0,#f3eff5 100%)}
 .pincesTableWrap{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:auto;box-shadow:var(--soft)}.pincesTable{width:100%;border-collapse:collapse;font-size:10px}.pincesTable th{text-align:left;padding:12px;background:#f8f4fa;color:var(--purple);font-size:8px;letter-spacing:.8px}.pincesTable td{padding:11px 12px;border-top:1px solid #eee8f1;color:#4e4653}.pincesTable tbody tr:hover{background:#fcfafd}.pincesTable td:nth-child(2){width:120px}.pincesTable td:nth-child(3){width:80px}.groupTag{font-size:8px;color:var(--purple2);font-weight:700}
 @media(max-width:700px){.pincesGroups{grid-template-columns:1fr}.pincesToolbar{align-items:stretch;flex-direction:column}.pincesCount{white-space:normal}}
 </style>
+<style id="pinces-editor-style">
+.pinEditPanel{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--soft)}
+.pinEditPanel h3{margin:0 0 12px;color:var(--purple);font-size:11px;letter-spacing:.7px}
+.pinEditGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pinEditActions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.pinEditActions button{border-radius:9px;padding:9px 13px;font-size:9px;font-weight:800}
+.pinEditSave{border:0;background:var(--purple);color:#fff}
+.pinEditCancel{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.pinEditBtn{border:1px solid #d9c6e1;background:#fff;color:var(--purple);border-radius:8px;padding:6px 9px;font-size:8px;font-weight:800}
+.pinEditBtn:hover{background:var(--purple3)}
+.pinDeleteBtn{border:0;background:#fff0f0;color:#a63a3a;border-radius:8px;padding:6px 9px;font-size:8px}
+.pinActionCell{white-space:nowrap}
+@media(max-width:700px){.pinEditGrid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -155,7 +169,7 @@ body{background:linear-gradient(180deg,#faf8fb 0,#f3eff5 100%)}
 <div class="detailcrumb">Componentes <span>›</span> Pinças</div>
 <div class="detailhead"><div><div class="eyebrow">CENTRAL TÉCNICA · PINÇAS</div><h1 class="pageTitle">Pinças</h1><p class="pageSub">Consulte por grupo, código, número, diâmetro ou definição.</p></div></div>
 <div class="pincesGroups" id="pincesGroups"></div>
-<div class="pincesToolbar"><div class="pincesSearch"><span>⌕</span><input id="pincesSearch" placeholder="Pesquisar código, número, diâmetro ou definição..."></div><div class="pincesCount" id="pincesCount"></div></div>
+<div class="pincesToolbar"><div class="pincesSearch"><span>⌕</span><input id="pincesSearch" placeholder="Pesquisar código, número, diâmetro ou definição..."></div><div class="pincesCount" id="pincesCount"></div><button class="chip" id="pincesNewBtn" style="display:none">+ NOVA PINÇA</button></div>
 <div id="pincesTable"></div>
 </div></section>
 <section class="page" id="detailPage"><div class="container" id="detailContainer"></div></section>
@@ -459,24 +473,7 @@ function fileToData(file){
  });
 }
 
-function pincesRender(group="all",query=""){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById("pincesPage").classList.add("active");
- const groups=[["all","Todas","document"],["universal","Pinças Universais","zoller"],["especial","Pinças Especiais","component"],["itens","Pinças de Itens","pin"]];
- document.getElementById("pincesGroups").innerHTML=groups.map(g=>`<button class="pincesGroup ${group===g[0]?"active":""}" data-pg="${g[0]}"><span>${iconSvg(g[2])}</span><b>${g[1]}</b></button>`).join("");
- document.getElementById("pincesSearch").value=query;
- let rows=[];
- (group==="all"?["universal","especial","itens"]:[group]).forEach(k=>PINCES_DATA[k].forEach(r=>rows.push({group:k,code:r[0],num:r[1],def:r[2]})));
- const q=query.trim().toLowerCase();
- if(q) rows=rows.filter(r=>(r.code+" "+r.num+" "+r.def).toLowerCase().includes(q));
- const names={universal:"Pinças Universais",especial:"Pinças Especiais",itens:"Pinças de Itens"};
- document.getElementById("pincesCount").textContent=`${rows.length} registro${rows.length===1?"":"s"}`;
- document.getElementById("pincesTable").innerHTML=rows.length?`<div class="pincesTableWrap"><table class="pincesTable"><thead><tr><th>Grupo</th><th>Código</th><th>Número</th><th>Definição / Itens</th></tr></thead><tbody>${rows.map(r=>`<tr><td><span class="groupTag">${names[r.group]}</span></td><td><b>${esc(r.code||"—")}</b></td><td>${esc(r.num||"—")}</td><td>${esc(r.def)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="panel">Nenhuma pinça encontrada.</div>`;
- document.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>pincesRender(b.dataset.pg,document.getElementById("pincesSearch").value));
- document.getElementById("pincesSearch").oninput=e=>pincesRender(group,e.target.value);
-}
-
-const PINCES_DATA={
+const DEFAULT_PINCES_DATA={
  universal:[
  ["512540","","Universal Ø 1.00"],["512541","","Universal Ø 1.20"],["612.069","","Universal Ø 1.30"],["512743","","Universal Ø 1.40"],
  ["512070","","Universal Ø 1.50"],["512071","","Universal Ø 1.60"],["612.372","","Universal Ø 1.70"],["612.072","","Universal Ø 1.80"],
@@ -531,6 +528,107 @@ const PINCES_DATA={
  ["612.598","","114.752 / 114.753 / 114.754"],["612.599","","114.755 / 114.756 / 114.757"],
  ["612.600","","114.758 / 114.759 / 114.760"]
  ]};
+
+
+function loadPincesData(){
+ try{
+  const saved=localStorage.getItem("gt_pinces_data");
+  if(saved){
+   const parsed=JSON.parse(saved);
+   if(parsed && Array.isArray(parsed.universal) && Array.isArray(parsed.especial) && Array.isArray(parsed.itens)) return parsed;
+  }
+ }catch(e){console.warn("Não foi possível carregar as pinças salvas.",e)}
+ return structuredClone(DEFAULT_PINCES_DATA);
+}
+let PINCES_DATA=loadPincesData();
+
+function savePincesData(){
+ try{localStorage.setItem("gt_pinces_data",JSON.stringify(PINCES_DATA));return true}
+ catch(e){console.error(e);toast("Não foi possível salvar as pinças.");return false}
+}
+
+let pinEditState=null;
+
+function pincesRender(group="all",query=""){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("pincesPage").classList.add("active");
+ const groups=[["all","Todas","document"],["universal","Pinças Universais","zoller"],["especial","Pinças Especiais","component"],["itens","Pinças de Itens","pin"]];
+ document.getElementById("pincesGroups").innerHTML=groups.map(g=>`<button class="pincesGroup ${group===g[0]?"active":""}" data-pg="${g[0]}"><span>${iconSvg(g[2])}</span><b>${g[1]}</b></button>`).join("");
+ document.getElementById("pincesSearch").value=query;
+ const newBtn=document.getElementById("pincesNewBtn");
+ if(newBtn){newBtn.style.display=adminUnlocked?"inline-block":"none";newBtn.onclick=pincesAdd}
+ let rows=[];
+ (group==="all"?["universal","especial","itens"]:[group]).forEach(k=>PINCES_DATA[k].forEach((r,index)=>rows.push({group:k,index,code:r[0],num:r[1],def:r[2]})));
+ const q=query.trim().toLowerCase();
+ if(q)rows=rows.filter(r=>(r.code+" "+r.num+" "+r.def).toLowerCase().includes(q));
+ const names={universal:"Pinças Universais",especial:"Pinças Especiais",itens:"Pinças de Itens"};
+ document.getElementById("pincesCount").textContent=`${rows.length} registro${rows.length===1?"":"s"}`;
+ document.getElementById("pincesTable").innerHTML=rows.length?`<div class="pincesTableWrap"><table class="pincesTable"><thead><tr><th>Grupo</th><th>Código</th><th>Número</th><th>Definição / Itens</th>${adminUnlocked?"<th>Ações</th>":""}</tr></thead><tbody>${rows.map(r=>`<tr><td><span class="groupTag">${names[r.group]}</span></td><td><b>${esc(r.code||"—")}</b></td><td>${esc(r.num||"—")}</td><td>${esc(r.def)}</td>${adminUnlocked?`<td class="pinActionCell"><button class="pinEditBtn" data-pinedit="${r.group}:${r.index}">EDITAR</button> <button class="pinDeleteBtn" data-pindelete="${r.group}:${r.index}">EXCLUIR</button></td>`:""}</tr>`).join("")}</tbody></table></div>`:`<div class="panel">Nenhuma pinça encontrada.</div>`;
+
+ if(adminUnlocked && pinEditState){
+  const r=PINCES_DATA[pinEditState.group]?.[pinEditState.index];
+  if(r){
+   const area=document.createElement("div");
+   area.id="pinEditArea";
+   area.innerHTML=`<div class="pinEditPanel">
+    <h3>EDITAR PINÇA · ${pinEditState.group==="universal"?"UNIVERSAL":pinEditState.group==="especial"?"ESPECIAL":"DE ITENS"}</h3>
+    <div class="pinEditGrid">
+     <div class="field"><label>Código</label><input id="pinEditCode" value="${esc(r[0]||"")}"></div>
+     <div class="field"><label>Número</label><input id="pinEditNum" value="${esc(r[1]||"")}"></div>
+     <div class="field" style="grid-column:1/-1"><label>Definição / Itens</label><input id="pinEditDef" value="${esc(r[2]||"")}"></div>
+    </div>
+    <div class="pinEditActions"><button class="pinEditCancel" id="pinEditCancel">CANCELAR</button><button class="pinEditSave" id="pinEditSave">SALVAR PINÇA</button></div>
+   </div>`;
+   document.getElementById("pincesTable").after(area);
+  }
+ }
+
+ document.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>{pinEditState=null;pincesRender(b.dataset.pg,document.getElementById("pincesSearch").value)});
+ document.getElementById("pincesSearch").oninput=e=>{pinEditState=null;pincesRender(group,e.target.value)};
+
+ if(adminUnlocked){
+  document.querySelectorAll("[data-pinedit]").forEach(b=>b.onclick=()=>{
+   const [g,i]=b.dataset.pinedit.split(":");
+   pinEditState={group:g,index:Number(i)};
+   pincesRender(group,document.getElementById("pincesSearch").value);
+  });
+  document.querySelectorAll("[data-pindelete]").forEach(b=>b.onclick=()=>{
+   const [g,i]=b.dataset.pindelete.split(":");
+   if(confirm("Excluir esta pinça?")){
+    PINCES_DATA[g].splice(Number(i),1);
+    pinEditState=null;
+    if(savePincesData()){pincesRender(group,document.getElementById("pincesSearch").value);toast("Pinça excluída.")}
+   }
+  });
+  const saveBtn=document.getElementById("pinEditSave");
+  if(saveBtn)saveBtn.onclick=()=>{
+   const r=PINCES_DATA[pinEditState.group]?.[pinEditState.index];
+   if(!r)return;
+   const code=document.getElementById("pinEditCode").value.trim();
+   const num=document.getElementById("pinEditNum").value.trim();
+   const def=document.getElementById("pinEditDef").value.trim();
+   if(!code&&!num&&!def){toast("Preencha pelo menos um campo.");return}
+   r[0]=code;r[1]=num;r[2]=def;
+   if(savePincesData()){pinEditState=null;pincesRender(group,document.getElementById("pincesSearch").value);toast("Pinça salva.")}
+  };
+  const cancelBtn=document.getElementById("pinEditCancel");
+  if(cancelBtn)cancelBtn.onclick=()=>{pinEditState=null;pincesRender(group,document.getElementById("pincesSearch").value)};
+ }
+}
+
+function pincesAdd(){
+ if(!adminUnlocked){openAdmin();if(!adminUnlocked)return}
+ const group=prompt("Grupo: universal, especial ou itens","universal");
+ if(!group||!["universal","especial","itens"].includes(group))return;
+ const code=prompt("Código:","");
+ if(code===null)return;
+ const num=prompt("Número:","");
+ if(num===null)return;
+ const def=prompt("Definição / Itens:","");
+ if(def===null)return;
+ PINCES_DATA[group].push([code.trim(),num.trim(),def.trim()]);
+ if(savePincesData()){pincesRender(group,"");toast("Nova pinça adicionada.")}
+}
 
 function detailRender(item,category){
  ensureContents();
@@ -699,7 +797,16 @@ document.getElementById("heroCta").onclick=()=>go("Suportes");
 document.getElementById("favBtn").onclick=()=>go("Favoritos");
 
 const editor=document.getElementById("editor");
-function openAdmin(){document.getElementById("admin").classList.add("open");editorRender("appearance")}
+const ADMIN_PASSWORD="Preset2026";
+let adminUnlocked=false;
+function openAdmin(){
+ const senha=prompt("Digite a senha para editar o Guia Técnico Preset:");
+ if(senha===null)return;
+ if(senha!==ADMIN_PASSWORD){toast("Senha incorreta.");return;}
+ adminUnlocked=true;
+ document.getElementById("admin").classList.add("open");
+ editorRender("appearance");
+}
 function editorRender(tab){
  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
  if(tab==="appearance") editor.innerHTML=`
@@ -848,7 +955,7 @@ function bindEditor(tab){
  if(tab==="notices"){document.getElementById("addNotice").onclick=()=>{if(nTitle.value.trim()){data.notices.unshift({title:nTitle.value,text:nText.value});save();editorRender("notices")}};document.querySelectorAll("[data-delnotice]").forEach(b=>b.onclick=()=>{data.notices.splice(+b.dataset.delnotice,1);save();editorRender("notices")})}
  if(tab==="backup"){document.getElementById("export").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="guia-tecnico-config.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};document.getElementById("import").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();editorRender("appearance")}catch{toast("Arquivo inválido.")}};r.readAsText(f)};document.getElementById("reset").onclick=()=>{if(confirm("Restaurar o modelo inicial?")){data=structuredClone(DEFAULT);save();editorRender("appearance")}}}
 }
-document.getElementById("adminBtn").onclick=openAdmin;document.getElementById("closeAdmin").onclick=()=>document.getElementById("admin").classList.remove("open");document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>editorRender(t.dataset.tab));
+document.getElementById("adminBtn").onclick=openAdmin;document.getElementById("closeAdmin").onclick=()=>{document.getElementById("admin").classList.remove("open");if(document.getElementById("pincesPage").classList.contains("active"))pincesRender();};document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>editorRender(t.dataset.tab));
 render();
 </script>
 </body>
