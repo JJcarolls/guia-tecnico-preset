@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guia Técnico Preset</title>
+<style>
+:root{
+ --purple:#5a2187;--purple2:#7b36ad;--purple3:#efe5f6;--ink:#241c2c;--muted:#746b7e;
+ --bg:#f7f5f8;--card:#fff;--line:#e7e0eb;--success:#258a57;--warn:#b57914;
+ --radius:18px;--shadow:0 10px 35px rgba(48,25,62,.08);
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.app{min-height:100vh}.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topin{max-width:1240px;margin:auto;display:flex;align-items:center;gap:18px;padding:12px 22px}
+.brand{display:flex;align-items:center;gap:10px;min-width:190px}.brandmark{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--purple),var(--purple2));display:grid;place-items:center;color:#fff;font-weight:900}
+.brandtext b{display:block;font-size:13px}.brandtext span{font-size:8px;color:var(--muted);letter-spacing:1.2px}
+.nav{display:flex;gap:3px;flex:1;overflow:auto}.nav button{border:0;background:transparent;padding:9px 10px;border-radius:9px;color:#51475a;font-size:11px;white-space:nowrap}.nav button:hover,.nav button.active{background:var(--purple3);color:var(--purple);font-weight:700}
+.top-actions{display:flex;gap:7px;align-items:center}.search{width:175px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 11px;font-size:11px;outline:none}.search:focus{border-color:#b996c9;box-shadow:0 0 0 3px #efe5f6}
+.iconbtn{width:36px;height:36px;border:1px solid var(--line);background:#fff;border-radius:10px;color:var(--purple);font-size:15px}.iconbtn:hover{background:var(--purple3)}
+.hero{max-width:1240px;margin:20px auto 0;padding:0 22px}.heroBox{min-height:390px;border-radius:26px;overflow:hidden;position:relative;background-size:cover;background-position:center;display:flex;align-items:flex-end;box-shadow:var(--shadow)}
+.heroBox:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,13,67,.93),rgba(72,25,97,.62),rgba(35,15,50,.10))}
+.heroContent{position:relative;z-index:2;color:#fff;max-width:650px;padding:48px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:2px;opacity:.82}.hero h1{font-size:48px;line-height:1.03;margin:10px 0 14px;letter-spacing:-1.8px}.hero p{font-size:14px;line-height:1.65;max-width:570px;opacity:.9;margin:0 0 22px}.primary{border:0;border-radius:11px;background:#fff;color:var(--purple);padding:12px 17px;font-weight:800;font-size:11px}.primary:hover{transform:translateY(-2px)}
+.container{max-width:1240px;margin:auto;padding:28px 22px 60px}.section{margin:26px 0}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:14px}.sectionhead h2{margin:0;color:var(--purple);font-size:15px}.sectionhead span{font-size:10px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{border:1px solid var(--line);background:var(--card);border-radius:16px;padding:19px;text-align:left;min-height:155px;box-shadow:0 2px 10px rgba(50,30,70,.025);transition:.2s}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#c9b1d6}.card .ico{width:42px;height:42px;border-radius:12px;background:var(--purple3);color:var(--purple);display:grid;place-items:center;margin-bottom:14px;font-size:20px}.card b{font-size:13px}.card p{font-size:10.5px;line-height:1.55;color:var(--muted);margin:7px 0}.card small{font-size:9px;color:var(--purple);font-weight:700}
+.featuregrid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:13px}.feature{border-radius:16px;padding:19px;border:1px solid var(--line);background:#fff}.feature.green{background:#eef9f2}.feature.yellow{background:#fff8e8}.feature.red{background:#fff0f0}.feature b{font-size:12px}.feature p{font-size:10px;line-height:1.5;color:#655c6b;margin:7px 0 0}
+.bottomgrid{display:grid;grid-template-columns:1fr 1.4fr;gap:13px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px}.panel h3{font-size:12px;margin:0 0 12px;color:var(--purple)}.statrow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-size:10px}.statrow:last-child{border:0}
+.docrow{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.docrow:last-child{border:0}.docico{width:34px;height:34px;border-radius:9px;background:var(--purple3);display:grid;place-items:center;color:var(--purple)}.docrow b{font-size:10.5px}.docrow span{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.footer{max-width:1240px;margin:auto;padding:20px 22px 35px;color:#948b9a;font-size:9px;text-align:center}
+.page{display:none}.page.active{display:block}.pageTitle{font-size:28px;margin:4px 0;color:var(--purple)}.pageSub{font-size:12px;color:var(--muted);margin:0 0 20px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:10px}.chip.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.admin{display:none;position:fixed;inset:0;background:rgba(31,17,38,.38);z-index:50}.admin.open{display:flex}.adminpanel{margin:auto;width:min(1100px,94vw);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 25px 80px rgba(20,10,30,.25)}.adminhead{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:17px 20px;display:flex;justify-content:space-between;align-items:center;z-index:2}.adminhead b{font-size:14px;color:var(--purple)}.close{border:0;background:#f2edf4;border-radius:9px;width:34px;height:34px}.adminbody{padding:20px}.tabs{display:flex;gap:6px;overflow:auto;margin-bottom:18px}.tab{border:0;background:#f5f1f6;color:#5b5262;border-radius:9px;padding:9px 12px;font-size:10px;white-space:nowrap}.tab.active{background:var(--purple);color:#fff}.editorgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:9px;font-weight:800;color:#5d5364;text-transform:uppercase;letter-spacing:.5px}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:11px;outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:#b996c9;box-shadow:0 0 0 3px #f2e9f5}.adminactions{display:flex;gap:8px;justify-content:flex-end;margin-top:17px}.save{border:0;background:var(--purple);color:#fff;border-radius:10px;padding:10px 16px;font-size:10px;font-weight:800}.secondary{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 16px;font-size:10px}
+.itemedit{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px}.itemedit .mini{width:38px;height:38px;border-radius:10px;background:var(--purple3);display:grid;place-items:center}.itemedit b{font-size:10px}.itemedit span{font-size:9px;color:var(--muted);display:block;margin-top:2px}.danger{border:0;background:#fff0f0;color:#a63a3a;border-radius:8px;padding:7px;font-size:10px}
+.drop{border:1px dashed #cbb7d4;background:#fbf8fc;border-radius:12px;padding:15px;text-align:center;font-size:10px;color:var(--muted)}.drop input{margin-top:8px;font-size:10px}
+.notice{border-left:4px solid var(--purple);background:#fff;border:1px solid var(--line);border-left-width:4px;padding:14px;border-radius:10px;margin-bottom:10px}.notice b{font-size:11px}.notice p{font-size:10px;color:var(--muted);margin:5px 0 0}
+.toast{position:fixed;right:20px;bottom:20px;background:#271c2e;color:#fff;padding:11px 14px;border-radius:10px;font-size:10px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:80}.toast.show{opacity:1;transform:none}
+@media(max-width:850px){.nav{display:none}.topin{padding:10px 14px}.search{width:130px}.grid{grid-template-columns:1fr 1fr}.featuregrid,.bottomgrid{grid-template-columns:1fr}.hero{padding:0 14px}.heroContent{padding:34px 28px}.hero h1{font-size:36px}.container{padding:22px 14px 50px}.editorgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+@media(max-width:520px){.brand{min-width:auto}.brandtext{display:none}.grid{grid-template-columns:1fr}.heroBox{min-height:360px}.hero h1{font-size:30px}.hero p{font-size:12px}.top-actions .search{display:none}}
+</style>
+
+<style id="premium-overrides">
+:root{--purple:#5b1f83;--purple2:#7b39a5;--purple3:#f0e8f5;--ink:#241a2b;--muted:#756b7d;--bg:#f5f2f7;--card:#fff;--line:#e5dce9;--shadow:0 18px 55px rgba(46,22,62,.11);--soft:0 7px 24px rgba(46,22,62,.07)}
+body{background:linear-gradient(180deg,#faf8fb 0,#f3eff5 100%)}
+.topbar{background:rgba(42,16,57,.96);border-bottom:1px solid rgba(255,255,255,.09);box-shadow:0 10px 30px rgba(31,13,42,.12)}
+.topin{max-width:1320px;padding:13px 24px}.brand{min-width:215px}.brandmark{width:39px;height:39px;border-radius:12px;background:linear-gradient(145deg,#9254ba,#4a176d);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}.brandtext b{color:#fff}.brandtext span{color:#cfc0d7}.nav button{color:#d9ccdf}.nav button:hover,.nav button.active{background:rgba(255,255,255,.1);color:#fff}.search{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#fff}.search::placeholder{color:#c8bacd}.iconbtn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.15);color:#fff}.iconbtn:hover{background:rgba(255,255,255,.14)}
+.hero{max-width:1320px;padding:0 24px;margin-top:22px}.heroBox{min-height:465px;border-radius:30px;box-shadow:0 25px 70px rgba(49,21,67,.18);border:1px solid rgba(255,255,255,.75)}.heroBox:before{background:linear-gradient(90deg,rgba(37,11,54,.95),rgba(61,19,83,.68),rgba(28,12,39,.12))}.heroContent{padding:58px;max-width:720px}.eyebrow{color:#dfc6eb;letter-spacing:2.8px;font-size:9px}.hero h1{font-size:56px;letter-spacing:-2.7px;margin:13px 0 16px}.hero p{font-size:15px;max-width:600px}.primary{padding:13px 19px;box-shadow:0 8px 22px rgba(0,0,0,.14)}
+.container{max-width:1320px;padding:34px 24px 70px}.section{margin:34px 0}.sectionhead h2{font-size:12px;letter-spacing:1.5px}.grid{gap:15px}.card{border-radius:18px;padding:22px;min-height:170px;border:1px solid rgba(110,77,126,.13);box-shadow:var(--soft);overflow:hidden}.card:hover{transform:translateY(-6px);box-shadow:0 20px 45px rgba(51,26,66,.12);border-color:#c7afd2}.card .ico{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,#f3e9f7,#e8d9ef);box-shadow:inset 0 1px 0 #fff}.card b{font-size:14px}.featuregrid,.bottomgrid{gap:15px}.feature,.panel{border-radius:18px;box-shadow:var(--soft)}.pageTitle{font-size:34px;letter-spacing:-1.3px}
+.adminpanel{border-radius:24px;box-shadow:0 25px 80px rgba(20,10,30,.25)}.adminhead{background:linear-gradient(100deg,#2d123e,#5a2180);color:#fff}.adminhead b{color:#fff}.close{background:rgba(255,255,255,.12);color:#fff}.save{background:linear-gradient(135deg,#5a2180,#7838a2)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.heroContent{animation:rise .6s ease both}.section{animation:rise .45s ease both}.card{animation:rise .45s ease both}.card:nth-child(2){animation-delay:.04s}.card:nth-child(3){animation-delay:.08s}.card:nth-child(4){animation-delay:.12s}.card:nth-child(5){animation-delay:.16s}.card:nth-child(6){animation-delay:.2s}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:850px){.heroContent{padding:38px 28px}.hero h1{font-size:38px}}@media(max-width:520px){.hero h1{font-size:31px}.heroBox{min-height:360px}}
+</style>
+
+<style>
+.card .ico,.docico,.featureIcon{display:grid;place-items:center}
+.card .ico svg,.docico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card .ico{position:relative;overflow:hidden}
+.card .ico:after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.5);top:-12px;right:-8px}
+.featureIcon{display:inline-grid;width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.55);vertical-align:middle;margin-right:7px}
+.featureIcon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.knowledge{position:relative;overflow:hidden;background:linear-gradient(135deg,#2d123e,#5b2182);color:#fff;border-radius:22px;padding:24px;box-shadow:0 18px 50px rgba(49,21,67,.18)}
+.knowledge:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-65px;top:-90px;border:1px solid rgba(255,255,255,.13);box-shadow:0 0 0 28px rgba(255,255,255,.03),0 0 0 58px rgba(255,255,255,.02)}
+.knowledge h3{margin:0 0 5px;font-size:15px;letter-spacing:.2px}.knowledge p{margin:0 0 18px;font-size:10px;color:#ddcfe5}
+.breadcrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.crumb{padding:8px 11px;border-radius:9px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);font-size:9px}.crumb.active{background:#fff;color:var(--purple);font-weight:800}.connector{width:18px;height:1px;background:rgba(255,255,255,.35)}
+</style>
+<style>
+.card .ico svg,.docico svg,.mini svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.mini{display:grid!important;place-items:center}
+.mini svg{width:19px;height:19px}
+</style><style>
+.chip svg{width:14px;height:14px;vertical-align:-2px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+</style><style>
+#nav button[data-nav="Pinças Especiais"]::before{content:"";display:inline-block;width:6px;height:6px;border:1.5px solid currentColor;border-radius:50%;margin-right:6px;vertical-align:1px}
+#nav button[data-nav="Logística Preset"]::before{content:none!important;display:none!important}
+</style>
+<style id="technical-content">
+.detailcrumb{font-size:10px;color:var(--muted);margin-bottom:10px}.detailcrumb span{padding:0 6px;color:var(--purple2)}
+.detailhead{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}.detailhead .eyebrow{color:var(--purple2);font-weight:800;letter-spacing:2px;font-size:9px}
+.metaGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}.metaGrid>div{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px;box-shadow:var(--soft)}.metaGrid span{display:block;font-size:8px;color:var(--muted);font-weight:800;letter-spacing:.7px}.metaGrid b{display:block;margin-top:5px;font-size:11px;color:var(--ink)}
+.detailHeroGrid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.detailDescription{padding:22px}.detailDescription h3,.panel h3{font-size:10px;letter-spacing:1px;color:var(--purple)}.detailDescription p{font-size:11px;line-height:1.65;color:var(--muted)}.detailMainImage,.detailResultImage{min-height:230px;border-radius:18px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:var(--soft)}.detailMainImage img,.detailResultImage img{width:100%;height:100%;min-height:230px;object-fit:contain;background:#f7f4f8}
+.emptyMedia{height:100%;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#b7aabd;font-size:10px}.emptyMedia svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.5}
+.detailSection{margin-top:25px}.detailSectionTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.detailSectionTitle b{font-size:11px;letter-spacing:.8px;color:var(--purple)}.detailSectionTitle span{font-size:9px;color:var(--muted)}
+.detailCards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.techCard{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;min-height:170px;box-shadow:var(--soft)}.techCard .num{position:absolute;top:9px;left:9px;background:var(--purple);color:#fff;border-radius:8px;padding:4px 6px;font-size:8px}.techCard img,.techMedia{width:100%;height:82px;object-fit:contain;background:#faf8fb;border-radius:9px;margin-bottom:9px}.techMedia{display:grid;place-items:center;color:var(--purple2)}.techMedia svg{width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.4}.techCard b{display:block;font-size:10px}.techCard small{font-size:8px;color:var(--purple2)}.techCard p{font-size:8px;color:var(--muted);margin:5px 0 0}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{display:flex;gap:9px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:var(--soft)}.stepNo{flex:0 0 25px;height:25px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;font-size:8px}.stepBody b{font-size:10px}.stepBody p{font-size:8px;color:var(--muted);line-height:1.5}.stepBody img{width:100%;max-height:120px;object-fit:contain;border-radius:8px;background:#faf8fb}
+.detailTwo{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px}.checklist,.errors{padding:18px}.checklist label{display:block;font-size:9px;color:var(--muted);padding:5px 0}.checklist input{accent-color:var(--purple)}.errors{background:#fffafa;border-color:#efdede}.errorItem{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f0e6e6}.errorItem:last-child{border-bottom:0}.errorItem>span{width:19px;height:19px;border-radius:50%;background:#f7dede;color:#a33a3a;display:grid;place-items:center;font-weight:800}.errorItem b{font-size:9px}.errorItem p{font-size:8px;color:var(--muted);margin:3px 0}.resultGrid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.resultGrid>.panel{padding:20px}.toolsRow{display:flex;flex-wrap:wrap;gap:10px}.toolPill{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--soft)}.toolPill svg{width:20px;height:20px;fill:none;stroke:var(--purple2);stroke-width:1.6}.toolPill b{font-size:9px}.emptyPanel{grid-column:1/-1;background:#fff;border:1px dashed #d8c7df;border-radius:14px;padding:24px;text-align:center;color:var(--muted);font-size:10px}
+.contentEditor{background:#faf8fb;border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px}.contentEditor h3{margin:0 0 10px;color:var(--purple);font-size:11px}.repeatRow{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:7px;align-items:start;border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px;margin-bottom:7px}.repeatRow.stepRow{grid-template-columns:70px 1fr 1fr 1fr auto}.repeatRow input,.repeatRow textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:10px}.repeatRow textarea{min-height:55px}.repeatRow .danger{align-self:center}.editorHint{font-size:9px;color:var(--muted);line-height:1.5}
+@media(max-width:850px){.metaGrid{grid-template-columns:repeat(2,1fr)}.detailHeroGrid,.detailTwo,.resultGrid{grid-template-columns:1fr}.detailCards{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.repeatRow,.repeatRow.stepRow{grid-template-columns:1fr}}
+</style>
+
+<style id="image-layout-fix">
+.detailMainImage,.detailResultImage{overflow:hidden;display:flex;align-items:center;justify-content:center;background:#f7f4f8}
+.detailMainImage img,.detailResultImage img{width:100%;height:100%;min-height:0;object-fit:contain;padding:18px;box-sizing:border-box}
+.techMedia.hasImg{padding:8px;box-sizing:border-box;display:flex;align-items:center;justify-content:center}
+.techMedia.hasImg img{width:100%;height:100%;max-height:82px;object-fit:contain}
+.stepImage{width:100%;height:180px;object-fit:contain;background:#faf8fb;border-radius:8px;padding:6px;box-sizing:border-box}
+.detailHeroGrid.single{grid-template-columns:1fr}
+.detailHeroGrid.single .detailMainImage{max-width:760px}
+</style>
+
+<style id="search-image-polish">
+.searchResultCard{cursor:pointer}
+.searchResultCard:hover{transform:translateY(-2px);border-color:#cbb0d8}
+.detailHeroGrid{grid-template-columns:minmax(0,1fr) minmax(420px,1fr);align-items:stretch}
+.detailDescription{min-height:360px}
+.detailMainImage{min-height:360px!important;height:360px!important;border-radius:18px;background:linear-gradient(145deg,#f7f3f8,#eee8f1);padding:14px}
+.detailMainImage img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;padding:0;display:block}
+.detailHeroGrid.single .detailMainImage{height:430px!important;max-width:900px}
+.detailResultImage{min-height:300px}
+.detailResultImage img{object-fit:contain}
+@media(max-width:900px){.detailHeroGrid{grid-template-columns:1fr}.detailDescription{min-height:0}.detailMainImage{min-height:300px!important;height:300px!important}}
+</style>
+
+<style id="pinces-center">
+.pincesGroups{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 15px}
+.pincesGroup{border:1px solid var(--line);background:#fff;border-radius:15px;padding:16px;text-align:left;display:flex;align-items:center;gap:11px;box-shadow:var(--soft);cursor:pointer;color:var(--ink)}
+.pincesGroup span{width:36px;height:36px;border-radius:11px;background:#f0e5f5;color:var(--purple);display:grid;place-items:center}.pincesGroup svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.pincesGroup b{font-size:10px}.pincesGroup.active{border-color:#a96ec1;background:#fbf7fd}
+.pincesToolbar{display:flex;align-items:center;gap:12px;margin:15px 0}.pincesSearch{flex:1;background:#fff;border:1px solid var(--line);border-radius:13px;height:44px;display:flex;align-items:center;padding:0 13px;box-shadow:var(--soft)}.pincesSearch span{font-size:20px;color:var(--purple2);margin-right:8px}.pincesSearch input{border:0;outline:0;width:100%;font-size:11px;color:var(--ink);background:transparent}.pincesCount{font-size:9px;color:var(--muted);white-space:nowrap}
+.pincesTableWrap{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:auto;box-shadow:var(--soft)}.pincesTable{width:100%;border-collapse:collapse;font-size:10px}.pincesTable th{text-align:left;padding:12px;background:#f8f4fa;color:var(--purple);font-size:8px;letter-spacing:.8px}.pincesTable td{padding:11px 12px;border-top:1px solid #eee8f1;color:#4e4653}.pincesTable tbody tr:hover{background:#fcfafd}.pincesTable td:nth-child(2){width:120px}.pincesTable td:nth-child(3){width:80px}.groupTag{font-size:8px;color:var(--purple2);font-weight:700}
+@media(max-width:700px){.pincesGroups{grid-template-columns:1fr}.pincesToolbar{align-items:stretch;flex-direction:column}.pincesCount{white-space:normal}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="topin">
+  <div class="brand"><div class="brandmark">N</div><div class="brandtext"><b id="brandName">NEODENT</b><span id="brandSub">GUIA TÉCNICO DE MONTAGEM</span></div></div>
+  <nav class="nav" id="nav"></nav>
+  <div class="top-actions"><input id="globalSearch" class="search" placeholder="Pesquisar no portal..."><button class="iconbtn" id="favBtn" title="Favoritos">☆</button><button class="iconbtn" id="adminBtn" title="Editar portal">⚙</button></div>
+</div></header>
+
+<main>
+<section class="page active" id="homePage">
+<div class="hero"><div class="heroBox" id="heroBox"><div class="heroContent"><div class="eyebrow" id="heroEyebrow"></div><div style="display:inline-flex;align-items:center;gap:6px;margin:8px 0 2px;padding:5px 9px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(255,255,255,.08);font-size:8px;letter-spacing:1px;color:#eee">● PORTAL TÉCNICO</div><h1 id="heroTitle"></h1><p id="heroText"></p><button class="primary" id="heroCta"></button></div></div></div>
+<div class="container">
+<section class="section"><div class="sectionhead"><h2>ACESSO POR CATEGORIA</h2><span>Conteúdo técnico organizado por área</span></div><div class="grid" id="categoryGrid"></div></section>
+<section class="section"><div class="sectionhead"><h2>DESTAQUES</h2><span>Qualidade, padronização e segurança</span></div><div class="featuregrid" id="featureGrid"></div></section>
+
+<section class="section">
+ <div class="knowledge">
+  <h3>MAPA DO CONHECIMENTO</h3>
+  <p>Navegue pelo processo sem se perder: cada etapa leva ao conteúdo técnico relacionado.</p>
+  <div class="breadcrumb">
+   <button class="crumb active" data-know="Início">Guia Técnico</button><span class="connector"></span>
+   <button class="crumb" data-know="Suportes">Suportes</button><span class="connector"></span>
+   <button class="crumb" data-know="Componentes">Componentes</button><span class="connector"></span>
+   <button class="crumb" data-know="Ferramentas">Ferramentas</button>
+  </div>
+ </div>
+</section>
+
+<section class="section"><div class="bottomgrid"><div class="panel"><h3>INFORMAÇÕES DO GUIA</h3><div id="guideInfo"></div></div><div class="panel"><h3>MAIS ACESSADOS</h3><div id="popular"></div></div></div></section>
+</div></section>
+
+<section class="page" id="categoryPage"><div class="container"><h1 class="pageTitle" id="catTitle">Categoria</h1><p class="pageSub" id="catSub"></p><div class="toolbar" id="catChips"></div><div class="grid" id="catItems"></div></div></section>
+<section class="page" id="pincesPage"><div class="container">
+<div class="detailcrumb">Componentes <span>›</span> Pinças</div>
+<div class="detailhead"><div><div class="eyebrow">CENTRAL TÉCNICA · PINÇAS</div><h1 class="pageTitle">Pinças</h1><p class="pageSub">Consulte por grupo, código, número, diâmetro ou definição.</p></div></div>
+<div class="pincesGroups" id="pincesGroups"></div>
+<div class="pincesToolbar"><div class="pincesSearch"><span>⌕</span><input id="pincesSearch" placeholder="Pesquisar código, número, diâmetro ou definição..."></div><div class="pincesCount" id="pincesCount"></div></div>
+<div id="pincesTable"></div>
+</div></section>
+<section class="page" id="detailPage"><div class="container" id="detailContainer"></div></section>
+<section class="page" id="docsPage"><div class="container"><h1 class="pageTitle">Central de Treinamento</h1><p class="pageSub">Documentos sincronizados automaticamente com a biblioteca de treinamentos do SharePoint.</p><div id="docsList"></div></div></section>
+<section class="page" id="noticesPage"><div class="container"><h1 class="pageTitle">Avisos e Atualizações</h1><p class="pageSub">Novidades publicadas no portal.</p><div id="noticesList"></div></div></section>
+<section class="page" id="favoritesPage"><div class="container"><h1 class="pageTitle">Meus Favoritos</h1><p class="pageSub">Itens que você marcou para acesso rápido.</p><div class="grid" id="favoritesList"></div></div></section>
+<section class="page" id="searchPage"><div class="container"><h1 class="pageTitle">Resultados</h1><p class="pageSub" id="searchLabel"></p><div class="grid" id="searchResults"></div></div></section>
+</main>
+<footer class="footer" id="footer"></footer>
+</div>
+
+<div class="admin" id="admin"><div class="adminpanel">
+<div class="adminhead"><b>EDITOR DO PORTAL · GUIA TÉCNICO</b><button class="close" id="closeAdmin">×</button></div>
+<div class="adminbody"><div class="tabs" id="tabs">
+<button class="tab active" data-tab="appearance">Aparência</button><button class="tab" data-tab="banner">Banner</button><button class="tab" data-tab="categories">Categorias</button><button class="tab" data-tab="contents">Conteúdos</button><button class="tab" data-tab="features">Destaques</button><button class="tab" data-tab="docs">Central de Treinamento</button><button class="tab" data-tab="notices">Avisos</button><button class="tab" data-tab="backup">Backup</button>
+</div>
+<div id="editor"></div>
+</div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DEFAULT={
+ brand:"NEODENT",brandSub:"GUIA TÉCNICO DE MONTAGEM",responsible:"Jhenifer Caroline",
+ hero:{eyebrow:"GUIA TÉCNICO",title:"Guia Técnico de Montagem",text:"Consulte rapidamente procedimentos, componentes, ferramentas e boas práticas para uma montagem padronizada.",cta:"COMEÇAR →",image:""},
+ categories:[
+  {id:"suportes",icon:"support",name:"Suportes",desc:"Modelos e conjuntos utilizados no processo.",tag:"Suportes",items:["TNL 12.1/2","TNL 18/20B","Conjuntos"]},
+  {id:"componentes",icon:"component",name:"Componentes",desc:"Componentes e acessórios técnicos utilizados na montagem e no preset.",tag:"Peças",items:["Parafusos Torx","Parafusos Allen","Parafusos Especiais","Contra Ponto / Pinos","Refrigeração","Porcas","Chavetas / Anel","Horn","Gancheira","Bico de Ar","Mola","Escova / Cunha"],subpages:{
+    "Logística Preset":["Insertos","Brocas","Fresas","Alargadores","Cossinete"]
+  },hiddenSubpages:["Logística Preset"]},
+  {id:"ferramentas",icon:"tool",name:"Ferramentas",desc:"Chaves e ferramentas organizadas por tipo.",tag:"Ferramentas",items:[],subpages:{"Chave Torx":[],"Chave Allen":[],"Chaves Diversas":[]}},
+  {id:"zoller",icon:"zoller",name:"Zoller",desc:"Instruções e cuidados para operação segura e padronizada da máquina.",tag:"Máquina",items:["Instrução e cuidados com a máquina"]},
+  {id:"erros",icon:"error",name:"Erros Comuns",desc:"Falhas frequentes e como evitá-las.",tag:"Qualidade",items:["Erro de montagem","Erro de identificação","Erro de posicionamento"]}
+ ],
+ features:[
+  {title:"Montagem Padronizada",text:"Seguir sempre o mesmo padrão garante qualidade, segurança e repetibilidade.",icon:"check",class:"green"},
+  {title:"Boas Práticas",text:"Materiais e componentes organizados, identificados e prontos para o processo.",icon:"spark",class:"yellow"},
+  {title:"Segurança",text:"Cuidados importantes para reduzir erros e proteger o processo.",icon:"shield",class:"red"}
+ ],
+ docs:[
+  {name:"INSTRUÇÃO PRA TRANSFORMAR MÁQUINA EM (K) PARA (L)",type:"PDF",desc:"Treinamento Zoller · documento armazenado no SharePoint.",sharePointUrl:"https://stgcs.sharepoint.com/:b:/r/sites/BR03_T_MiB/PreSetNeodent/Central_Treinamento/zoller/INSTRU%C3%87%C3%83O%20PRA%20TRANSFORMAR%20MAQUINA%20EM%20(K)%20PARA%20(L).pdf?d=w392ce741a3c149fbadcaaca3ee11981b&csf=1&web=1&e=4pZekX"},
+  {name:"Manual de Montagem",type:"PDF",desc:"Procedimento geral de montagem."},
+  {name:"Ficha Técnica",type:"PDF",desc:"Informações técnicas dos componentes."}
+],
+ notices:[{title:"Portal atualizado",text:"Nova estrutura do Guia Técnico disponível para consulta."}],
+ guide:{version:"1.9",updated:"Setembro/2026",status:"Catálogo de treinamentos sincronizado com SharePoint"},
+ nav:["Início","Suportes","Componentes","Pinças","Logística Preset","Ferramentas","Zoller","Central de Treinamento","Avisos"],
+ footer:"Guia Técnico · Ambiente interno · Conteúdo administrável"
+};
+let data=load();
+let favorites=JSON.parse(localStorage.getItem("gt_favs")||"[]");
+
+function allLeafItems(){
+ const arr=[];
+ data.categories.forEach(c=>{
+  (c.items||[]).forEach(x=>arr.push({name:x,category:c.name,categoryId:c.id}));
+  Object.entries(c.subpages||{}).forEach(([sp,items])=>{
+   if((items||[]).length===0) arr.push({name:sp,category:c.name,categoryId:c.id,subpage:sp});
+   (items||[]).forEach(x=>arr.push({name:x,category:sp,categoryId:c.id,subpage:sp}));
+  });
+ });
+ return arr;
+}
+function blankContent(name,category){
+ return {title:name,sap:"",family:"",application:"",avgTime:"",level:"",description:"",
+ mainImage:"",mainImageSize:"medium",required:[],steps:[],checklist:[],errors:[],resultText:"",resultImage:"",resultImageSize:"medium",tools:[]};
+}
+function ensureContents(){
+ if(!data.contents) data.contents={};
+ allLeafItems().forEach(x=>{
+   const key=x.name;
+   if(!data.contents[key]) data.contents[key]=blankContent(x.name,x.category);
+ });
+}
+
+ensureContents();
+
+function migrateStructure(){
+ const s=data.categories.find(c=>c.id==="suportes");
+ if(s){s.icon="support";s.name="Suportes";s.desc="Modelos e conjuntos utilizados no processo.";s.tag="Suportes";s.items=["TNL 12.1/2","TNL 18/20B","Conjuntos"];}
+ const c=data.categories.find(c=>c.id==="componentes");
+ if(c){
+   c.icon="component";c.name="Componentes";c.desc="Componentes e acessórios técnicos utilizados na montagem e no preset.";c.tag="Peças";
+   c.items=["Parafusos Torx","Parafusos Allen","Parafusos Especiais","Contra Ponto / Pinos","Refrigeração","Porcas","Chavetas / Anel","Horn","Gancheira","Bico de Ar","Mola","Escova / Cunha"];
+   c.subpages={};
+ }
+ if(c){c.subpages={};}
+ c.subpages={"Logística Preset":["Insertos","Brocas","Fresas","Alargadores","Cossinete"]};c.hiddenSubpages=["Logística Preset"];
+ const f=data.categories.find(c=>c.id==="ferramentas");
+ if(f){
+   f.icon="tool";f.name="Ferramentas";f.desc="Chaves e ferramentas organizadas por tipo.";f.tag="Ferramentas";
+   f.items=[];
+   f.subpages={"Chave Torx":[],"Chave Allen":[],"Chaves Diversas":[]};
+ }
+ const z=data.categories.find(c=>c.id==="zoller");
+ if(z){z.icon="zoller";z.name="Zoller";z.desc="Instruções e cuidados para operação segura e padronizada da máquina.";z.items=["Instrução e cuidados com a máquina"];}
+
+ const e=data.categories.find(c=>c.id==="erros"); if(e)e.icon="error";
+ data.nav=["Início","Suportes","Componentes","Pinças","Logística Preset","Ferramentas","Zoller","Central de Treinamento","Avisos"];
+}
+migrateStructure();
+
+function migrateSharePointDocs(){
+ const url="https://stgcs.sharepoint.com/:b:/r/sites/BR03_T_MiB/PreSetNeodent/Central_Treinamento/zoller/INSTRU%C3%87%C3%83O%20PRA%20TRANSFORMAR%20MAQUINA%20EM%20(K)%20PARA%20(L).pdf?d=w392ce741a3c149fbadcaaca3ee11981b&csf=1&web=1&e=4pZekX";
+ if(!Array.isArray(data.docs)) data.docs=[];
+ const name="INSTRUÇÃO PRA TRANSFORMAR MÁQUINA EM (K) PARA (L)";
+ let d=data.docs.find(x=>String(x.name||"").toLowerCase()===name.toLowerCase());
+ if(d) d.sharePointUrl=url;
+ else data.docs.unshift({name,type:"PDF",desc:"Treinamento Zoller · documento armazenado no SharePoint.",sharePointUrl:url});
+}
+migrateSharePointDocs();
+
+function load(){try{return JSON.parse(localStorage.getItem("gt_data"))||structuredClone(DEFAULT)}catch(e){return structuredClone(DEFAULT)}}
+
+const PDF_DB_NAME="guia_tecnico_files";
+const PDF_DB_STORE="pdfs";
+function pdfDB(){
+ return new Promise((resolve,reject)=>{
+  const req=indexedDB.open(PDF_DB_NAME,1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(PDF_DB_STORE))req.result.createObjectStore(PDF_DB_STORE)};
+  req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);
+ });
+}
+async function pdfPut(id,file){
+ const db=await pdfDB();
+ return new Promise((resolve,reject)=>{const tx=db.transaction(PDF_DB_STORE,"readwrite");tx.objectStore(PDF_DB_STORE).put(file,id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
+}
+async function pdfGet(id){
+ const db=await pdfDB();
+ return new Promise((resolve,reject)=>{const tx=db.transaction(PDF_DB_STORE,"readonly");const r=tx.objectStore(PDF_DB_STORE).get(id);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)});
+}
+async function pdfDelete(id){
+ if(!id)return; const db=await pdfDB();
+ return new Promise((resolve,reject)=>{const tx=db.transaction(PDF_DB_STORE,"readwrite");tx.objectStore(PDF_DB_STORE).delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});
+}
+function save(){try{localStorage.setItem("gt_data",JSON.stringify(data));render();toast("Alterações salvas.")}catch(e){console.error(e);toast("Configuração salva; arquivos PDF ficam no armazenamento de arquivos.")}}
+
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function iconSvg(key){
+ const icons={
+  support:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18h16"/><path d="M6 18V7h12v11"/><path d="M8 7V4h8v3"/><path d="M9 11h6M9 14h6"/><path d="M4 18v2h16v-2"/></svg>`,
+  component:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 5 5-2 5 2 2 5-2 5-5 2-5-2-2-5 2-5Z"/><path d="m7 5 5 5 5-5M12 10v7"/><path d="M4 18h5M15 18h5"/></svg>`,
+  tool:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5.5a5 5 0 0 0 6.2 6.2l-7.8 7.8a2.1 2.1 0 1 1-3-3l7.8-7.8A5 5 0 0 0 14 5.5Z"/><path d="m5 5 4 4M4 9l5-5"/><circle cx="6" cy="18" r="2.2"/></svg>`,
+  zoller:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><path d="m17.8 6.2-2.1 2.1M6.2 17.8l2.1-2.1"/></svg>`,
+  error:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 21 20H3L12 3Z"/><path d="M12 8v6M12 17.5v.5"/></svg>`,
+  document:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 11h6M9 14h6M9 17h4"/><path d="m8 7 1 1 2-2"/></svg>`,
+  favorite:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg>`,
+  notice:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11v2h3l8 5V6l-8 5H4Z"/><path d="M19 9.5a4 4 0 0 1 0 5M21 7a7 7 0 0 1 0 10"/><path d="M7 13v4a2 2 0 0 0 2 2h1"/></svg>`,
+  search:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>`,
+  shield:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 19 6v5.3c0 4.5-2.8 7.7-7 9.2-4.2-1.5-7-4.7-7-9.2V6l7-3Z"/><path d="m9 12 2 2 4-4"/></svg>`,
+  torx:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10M7 20h10M12 4v16"/><path d="m7 7 5 5 5-5M7 17l5-5 5 5"/></svg>`,
+  allen:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h8v4h-4v10"/><path d="M12 9h4v4h-4"/><path d="M8 19h8"/></svg>`,
+  specialScrew:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10v4l-2 2v7H9v-7L7 9V5Z"/><path d="M9 7h6M9 14h6"/></svg>`,
+  pin:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="2"/><path d="M12 9v11M8 20h8"/><path d="M7 5h10"/></svg>`,
+  cooling:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18"/><path d="m5.5 5.5 13 13M18.5 5.5l-13 13"/><circle cx="12" cy="12" r="3"/></svg>`,
+  nut:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 4 8 0 4 4v8l-4 4H8l-4-4V8l4-4Z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  ring:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="3"/><path d="M6 5 4 3M18 5l2-2"/></svg>`,
+  horn:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h7l7-5v10l-7-5H5z"/><path d="M5 12v4h3M19 9.5a4 4 0 0 1 0 5"/></svg>`,
+  hook:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v9a5 5 0 0 0 10 0V9"/><path d="M17 9h3v4a8 8 0 0 1-16 0V7"/></svg>`,
+  air:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h9a3 3 0 1 0-3-3"/><path d="M4 16h12a2 2 0 1 0-2-2"/><path d="M4 8h4"/></svg>`,
+  spring:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5c6 0 6 14 12 14"/><path d="M6 19c6 0 6-14 12-14"/></svg>`,
+  brush:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 18 7-7 5 5-7 7H5v-5Z"/><path d="m12 11 3-3 5 5-3 3"/><path d="M8 21h8"/></svg>`,
+  clamp:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10v5H7z"/><path d="M9 10v9h6v-9"/><path d="M6 19h12"/></svg>`,
+  logistics:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10v10H4z"/><path d="M14 10h4l2 3v4h-6z"/><circle cx="8" cy="19" r="2"/><circle cx="17" cy="19" r="2"/></svg>`,
+  insert:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 10 4v8l-10 4-3-8 3-8Z"/><path d="m7 4 5 8 5-4M12 12v8"/></svg>`,
+  drill:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h9l5 4-5 4H5z"/><path d="M5 8V5M5 16v3M14 9l4-4M14 15l4 4"/></svg>`,
+  mill:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4h8v7H8z"/><path d="M10 11v7M14 11v7M8 18h8"/><path d="M6 21h12"/></svg>`,
+  reamer:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6v16H9z"/><path d="m9 7-3 2M15 7l3 2M9 12l-3 2M15 12l3 2M9 17l-3 2M15 17l3 2"/></svg>`,
+  die:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10v14H7z"/><path d="M9 8h6M9 12h6M9 16h6"/><circle cx="12" cy="5" r="2"/></svg>`,
+  toolTorx:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h12M6 19h12M9 5v5l3 2 3-2V5M9 19v-5l3-2 3 2v5"/></svg>`,
+  toolAllen:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h8v4h-4v10"/><path d="M11 9h6v4h-6"/></svg>`,
+  toolSet:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 5 4 4M4 9l5-5"/><path d="M14 5.5a5 5 0 0 0 6.2 6.2l-7.8 7.8a2.1 2.1 0 1 1-3-3l7.8-7.8A5 5 0 0 0 14 5.5Z"/></svg>`,
+  subpage:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7l2 2h7v12H4z"/><path d="M8 11h8M8 15h5"/></svg>`
+ };
+ return icons[key]||icons.component;
+}
+function navRender(){document.getElementById("nav").innerHTML=data.nav.map(n=>`<button data-nav="${esc(n)}">${esc(n)}</button>`).join("");document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>go(b.dataset.nav))}
+function go(n){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ if(n==="Início"){document.getElementById("homePage").classList.add("active");return}
+ if(n==="Central de Treinamento"){document.getElementById("docsPage").classList.add("active");docsRender();return}
+ if(n==="Avisos"){document.getElementById("noticesPage").classList.add("active");noticesRender();return}
+ if(n==="Favoritos"){document.getElementById("favoritesPage").classList.add("active");favoritesRender();return}
+ if(n==="Pinças" ){pincesRender();return}
+ if(n==="Logística Preset"){
+   const c=data.categories.find(x=>x.id==="componentes");
+   if(c){subpageRender(c,n);return}
+ }
+ const c=data.categories.find(x=>x.name===n);
+ if(c){document.getElementById("categoryPage").classList.add("active");categoryRender(c);return}
+}
+
+function featureIcon(k){
+ if(k==="check") return `<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m8 12 2.5 2.5L16.5 9"/></svg>`;
+ if(k==="spark") return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="m18.5 15 .8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></svg>`;
+ return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 19 6v5.3c0 4.5-2.8 7.7-7 9.2-4.2-1.5-7-4.7-7-9.2V6l7-2.5Z"/><path d="m9 12 2 2 4-4"/></svg>`;
+}
+
+function render(){
+ document.getElementById("brandName").textContent=data.brand;document.getElementById("brandSub").textContent=data.brandSub;
+ document.getElementById("heroEyebrow").textContent=data.hero.eyebrow;document.getElementById("heroTitle").textContent=data.hero.title;document.getElementById("heroText").textContent=data.hero.text;document.getElementById("heroCta").textContent=data.hero.cta;
+ const hb=document.getElementById("heroBox");hb.style.backgroundImage=data.hero.image?`url(${data.hero.image})`:"linear-gradient(120deg,#80658e,#cfc4d5)";
+ document.getElementById("categoryGrid").innerHTML=data.categories.map(c=>`<button class="card" data-cat="${esc(c.id)}"><div class="ico">${iconSvg(c.icon)}</div><b>${esc(c.name)}</b><p>${esc(c.desc)}</p><small>${esc(c.tag)} · ${c.items.length} itens →</small></button>`).join("");
+ document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{const c=data.categories.find(x=>x.id===b.dataset.cat);go(c.name)});
+ document.querySelectorAll("[data-know]").forEach(b=>b.onclick=()=>go(b.dataset.know));
+ document.getElementById("featureGrid").innerHTML=data.features.map(f=>`<div class="feature ${esc(f.class)}"><b><span class="featureIcon">${featureIcon(f.icon)}</span>${esc(f.title)}</b><p>${esc(f.text)}</p></div>`).join("");
+ document.getElementById("guideInfo").innerHTML=[["Responsável",data.responsible],["Versão",data.guide.version],["Última atualização",data.guide.updated],["Status",data.guide.status]].map(x=>`<div class="statrow"><span>${esc(x[0])}</span><b>${esc(x[1])}</b></div>`).join("");
+ document.getElementById("popular").innerHTML=data.categories.slice(0,4).map(c=>`<div class="docrow"><div class="docico">${iconSvg(c.icon)}</div><div><b>${esc(c.items[0]||c.name)}</b><span>${esc(c.name)} · referência técnica</span></div></div>`).join("");
+ document.getElementById("footer").textContent=data.footer;navRender();
+}
+
+function itemIcon(name, category){
+ const m={
+  "TNL 12.1/2":"support","TNL 18/20B":"support","Conjuntos":"support",
+  "Parafusos Torx":"torx","Parafusos Allen":"allen","Parafusos Especiais":"specialScrew",
+  "Contra Ponto / Pinos":"pin","Refrigeração":"cooling","Porcas":"nut","Chavetas / Anel":"ring",
+  "Horn":"horn","Gancheira":"hook","Bico de Ar":"air","Mola":"spring","Escova / Cunha":"brush",
+  "Instrução e cuidados com a máquina":"zoller",
+  "Insertos":"insert","Brocas":"drill","Fresas":"mill","Alargadores":"reamer","Cossinete":"die",
+  "Pinças Especiais":"clamp","Logística Preset":"logistics",
+  "Chave Torx":"toolTorx","Chave Allen":"toolAllen","Chaves Diversas":"toolSet"
+ };
+ return m[name] || (category==="componentes" ? "component" : category==="zoller" ? "zoller" : "document");
+}
+
+function categoryRender(c){
+ document.getElementById("catTitle").textContent=c.name;
+ document.getElementById("catSub").textContent=c.desc;
+
+ const subpageNames=(c.subpages?Object.keys(c.subpages):[]).filter(x=>!(c.hiddenSubpages||[]).includes(x));
+ document.getElementById("catChips").innerHTML=`<button class="chip active">Todos</button>`+
+   c.items.map(x=>`<button class="chip">${esc(x)}</button>`).join("")+
+   subpageNames.map(x=>`<button class="chip">${iconSvg("subpage")} ${esc(x)}</button>`).join("");
+
+ let cards=c.items.map(x=>`
+   <button class="card" data-item="${esc(x)}">
+    <div class="ico">${iconSvg(itemIcon(x,c.id))}</div>
+    <b>${esc(x)}</b>
+    <p>Conteúdo técnico, instruções, fotos, documentos e informações relacionadas.</p>
+    <small>ABRIR CONTEÚDO →</small>
+   </button>`).join("");
+
+ if(c.subpages){
+  cards += subpageNames.map(sp=>`
+   <button class="card" data-subpage="${esc(sp)}">
+    <div class="ico">${iconSvg(itemIcon(sp,c.id))}</div>
+    <b>${esc(sp)}</b>
+    <p>Subpágina técnica com conteúdos organizados para consulta.</p>
+    <small>ABRIR CONTEÚDO →</small>
+   </button>`).join("");
+ }
+
+ document.getElementById("catItems").innerHTML=cards;
+
+ document.querySelectorAll(".chip").forEach(ch=>ch.onclick=()=>{
+   document.querySelectorAll(".chip").forEach(x=>x.classList.remove("active"));
+   ch.classList.add("active");
+ });
+
+ document.querySelectorAll("[data-item]").forEach(b=>b.onclick=()=>{
+   detailRender(b.dataset.item,c.name);
+ });
+
+ document.querySelectorAll("[data-subpage]").forEach(b=>b.onclick=()=>{
+   subpageRender(c,b.dataset.subpage);
+ });
+}
+function subpageRender(parent,name){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("categoryPage").classList.add("active");
+ document.getElementById("catTitle").textContent=name;
+ document.getElementById("catSub").textContent=`${parent.name} · subpágina técnica`;
+ const items=(parent.subpages&&parent.subpages[name])||[];
+ document.getElementById("catChips").innerHTML=`<button class="chip active">Todos</button>`;
+ document.getElementById("catItems").innerHTML = items.length ? items.map(x=>`
+   <button class="card" data-item="${esc(x)}">
+    <div class="ico">${iconSvg(itemIcon(x,"componentes"))}</div>
+    <b>${esc(x)}</b>
+    <p>Conteúdo técnico, instruções, fotos, documentos e informações relacionadas.</p>
+    <small>ABRIR CONTEÚDO →</small>
+   </button>`).join("") : `
+   <div class="panel" style="grid-column:1/-1">
+    <div class="docico">${iconSvg("subpage")}</div>
+    <h3 style="margin:12px 0 5px">Conteúdo em construção</h3>
+    <p>Esta subpágina está pronta para receber os documentos e instruções correspondentes.</p>
+   </div>`;
+
+ document.querySelectorAll("[data-item]").forEach(b=>b.onclick=()=>{
+   detailRender(b.dataset.item,name);
+ });
+}
+
+function fileToData(file){
+ return new Promise((resolve,reject)=>{
+   if(!file){resolve("");return}
+   const r=new FileReader();
+   r.onload=()=>resolve(r.result);
+   r.onerror=reject;
+   r.readAsDataURL(file);
+ });
+}
+
+function pincesRender(group="all",query=""){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("pincesPage").classList.add("active");
+ const groups=[["all","Todas","document"],["universal","Pinças Universais","zoller"],["especial","Pinças Especiais","component"],["itens","Pinças de Itens","pin"]];
+ document.getElementById("pincesGroups").innerHTML=groups.map(g=>`<button class="pincesGroup ${group===g[0]?"active":""}" data-pg="${g[0]}"><span>${iconSvg(g[2])}</span><b>${g[1]}</b></button>`).join("");
+ document.getElementById("pincesSearch").value=query;
+ let rows=[];
+ (group==="all"?["universal","especial","itens"]:[group]).forEach(k=>PINCES_DATA[k].forEach(r=>rows.push({group:k,code:r[0],num:r[1],def:r[2]})));
+ const q=query.trim().toLowerCase();
+ if(q) rows=rows.filter(r=>(r.code+" "+r.num+" "+r.def).toLowerCase().includes(q));
+ const names={universal:"Pinças Universais",especial:"Pinças Especiais",itens:"Pinças de Itens"};
+ document.getElementById("pincesCount").textContent=`${rows.length} registro${rows.length===1?"":"s"}`;
+ document.getElementById("pincesTable").innerHTML=rows.length?`<div class="pincesTableWrap"><table class="pincesTable"><thead><tr><th>Grupo</th><th>Código</th><th>Número</th><th>Definição / Itens</th></tr></thead><tbody>${rows.map(r=>`<tr><td><span class="groupTag">${names[r.group]}</span></td><td><b>${esc(r.code||"—")}</b></td><td>${esc(r.num||"—")}</td><td>${esc(r.def)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="panel">Nenhuma pinça encontrada.</div>`;
+ document.querySelectorAll("[data-pg]").forEach(b=>b.onclick=()=>pincesRender(b.dataset.pg,document.getElementById("pincesSearch").value));
+ document.getElementById("pincesSearch").oninput=e=>pincesRender(group,e.target.value);
+}
+
+const PINCES_DATA={
+ universal:[
+ ["512540","","Universal Ø 1.00"],["512541","","Universal Ø 1.20"],["612.069","","Universal Ø 1.30"],["512743","","Universal Ø 1.40"],
+ ["512070","","Universal Ø 1.50"],["512071","","Universal Ø 1.60"],["612.372","","Universal Ø 1.70"],["612.072","","Universal Ø 1.80"],
+ ["612.073","","Universal Ø 1.90"],["512374","","Universal Ø 2.00"],["513967","","Universal Ø 2.10"],["612.456","","Universal Ø 2.20"],
+ ["612.076","","Universal Ø 2.30"],["612.372","","Universal Ø 2.40"],["612.097","","Universal Ø 2.50"],["512392","","Universal Ø 2.60"],
+ ["512451","","Universal Ø 2.80"],["512430","","Universal Ø 2.90"],["512001","","Universal Ø 3.00"],["512054","","Universal Ø 3.10"],
+ ["512705","","Universal Ø 3.20"],["612.083","","Universal Ø 3.40"],["612.070","","Universal Ø 3.50"],["","","Universal Ø 3.60"],
+ ["612.086","","Universal Ø 3.70"],["612.087","","Universal Ø 3.80"],["512391","","Universal Ø 3.90"],["612.088","","Universal Ø 4.00"],
+ ["514775","","Universal Long-Nose Ø 4.00"],["612.490","","Universal Ø 4.10"],["612.090","","Universal Ø 4.20"],["612.091","","Universal Ø 4.30"],
+ ["612.373","","Universal Ø 4.50"],["612.577","","Universal Ø 4.60"],["612.094","","Universal Ø 4.80"],["514777","","Universal Long-Nose Ø 5.00"],
+ ["","","Universal Ø 5.20"],["512780","","Universal Ø 5.30"],["512459","","Universal Ø 5.40"],["512548","","Universal Ø 5.50"],
+ ["512564","","Universal Ø 5.70"],["517744","","Universal Ø 6.40"],["","","Universal Ø 6.50"],["612.578","","Universal Ø 6.80"],
+ ["512582","","Universal Ø 7.00"],["512584","","Universal Ø 7.14"],["512545","","Universal Ø 7.20"],["512746","","Universal Ø 7.50"],
+ ["","","Universal Ø 7.80"],["512548","","Universal Ø 8.20"],["512481","","Universal Ø 8.30"],["512491","","Universal Ø 8.50"],
+ ["512550","","Universal Ø 9.00"],["512551","","Universal Ø 9.30"],["","","Universal Ø 9.55"],["512552","","Universal Ø 10.00"],
+ ["512583","","Universal Ø 10.30"],["512554","","Universal Ø 10.50"],["512555","","Universal Ø 11.00"],["","","Universal Ø 11.15"],
+ ["","","Universal Ø 11.50"],["612.099","","Universal Ø 12.00"],["","","Universal Ø 12.30"],["512585","","Universal Ø 12.70"]
+ ],
+ especial:[
+ ["612356","124","Munhão Universal Angulado CM 3.3"],["612353","126","Munhão Universal Angulado CM 4.5"],
+ ["512557","127","Mini Pilar Angulado GM 17°"],["612352","134","Munhão Angulado 3.3 — Altura 3 e 4"],
+ ["512558","151","Munhão Angulado 3.3 — Altura 2"],["","","Munhão Angulado 4.1 e 4.3"],
+ ["","","Munhão Angulado 4.1 30°"],["","","Pilar Angulado Plus 17°"],["","","Mini Pilar CM 17° e 30°"],
+ ["","","Mini Pilar CM Exact 17° e 30°"],["","","Mini Pilar Angulado GM 30°"],["512559","152","Munhão Angulado 4.1 30°"],
+ ["512560","135","Munhão Angulado 5.0"],["512561","162","Base Titânio Exact 3.5 x 4"],
+ ["512562","161","Base Titânio HE para CEREC"],["512563","159","Base Titânio CM Exact"],
+ ["512564","154","Base Titânio HE 4.1 x 4.3"],["512565","160","Base Titânio HE 5.0 x 4.5"],
+ ["512566","183","Base Titânio Ø4.00 x 16"],["512567","185","Base Titânio Ø5.50 x 16"],
+ ["512668","192","Base Titânio Rot. 3.5 x 5"],["512669","193","Base Titânio Plus Rot."],
+ ["612187","36","Cilindro Carga Imediata GT Latão"],["512575","118","Cilindro Mini Pilar Cônico"],
+ ["512576","61","Cilindro Mini Pilar Cônico"],["512577","60","Cilindro GT Calcinável"],
+ ["512578","100","Cilindro Mini Pilar Cônico 5.0"],["512629","35","Cilindro Titânio GT Assentamento Passivo"],
+ ["512630","135","Cilindro Micro Pilar Cônico"],["512631","171","Cilindro Micro Pilar Cônico — Co-Cr"],
+ ["512633","170","Cilindro do Pilar 4.8 NEO Titânio"],["512635","174","Corpo Montador HE Smart Estreito"],
+ ["512636","173","Corpo Montador HE Smart Regular"],["512637","175","Corpo Montador HE Smart Largo"],
+ ["512660","181","Corpo Chave de Instalação"],["512662","184","Corpo Cilindro em Co-Cr"],
+ ["512672","196","Corpo Medidor de Ângulo"],["515167","148","Corpo Prolongador de Brocas"],
+ ["515026","200","Componente Prótese Cementada"],["512659","155","Macho de Rosca AlTi"],
+ ["512640","165","Macho de Rosca Fácil"],["512658","179","Medidor de Ângulo 12.8"],
+ ["512661","182","Medidor de Ângulo GM"],["512650","157","Transfer p/ Escaneamento Mini Pilar Cônico 4.1/4.3"],
+ ["512651","156","Transfer p/ Escaneamento"],["512652","157","Transfer p/ Escaneamento Mini Pilar Cônico"],
+ ["512653","158","Transfer p/ Escaneamento"],["512654","178","UCLA Titânio 4.1 e 4.3"],
+ ["512655","30","UCLA Titânio 3.3"],["512656","143","UCLA em Co-Cr 4.1/4.3"],
+ ["512657","78","UCLA em Co-Cr 5.0"],["512658","201","Parafuso de base de zircônia"]
+ ],
+ itens:[
+ ["612.590","","114.422 / 114.423 / 114.424"],["","","114.328 / 114.329 / 114.330"],["","","114.226 / 114.227 / 114.228"],
+ ["612.591","","114.425 / 114.426 / 114.427"],["","","114.419 / 114.420 / 114.421"],["","","114.335 / 114.336 / 114.337"],
+ ["612.592","","114.442 / 114.443 / 114.444"],["612.594","","114.450 / 114.451 / 114.452"],
+ ["612.596","","114.454 / 114.455 / 114.456"],["","","114.460 / 114.461 / 114.462"],
+ ["612.597","","114.457 / 114.458 / 114.459"],["","","114.463 / 114.464 / 114.465"],
+ ["612.598","","114.752 / 114.753 / 114.754"],["612.599","","114.755 / 114.756 / 114.757"],
+ ["612.600","","114.758 / 114.759 / 114.760"]
+ ]};
+
+function detailRender(item,category){
+ ensureContents();
+ const d=data.contents[item]||blankContent(item,category);
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("detailPage").classList.add("active");
+
+ const req=(d.required||[]).filter(x=>x && (x.name||x.sap||x.desc||x.image));
+ const steps=(d.steps||[]).filter(x=>x && (x.title||x.text||x.image));
+ const checklist=(d.checklist||[]).filter(Boolean);
+ const errors=(d.errors||[]).filter(x=>x && (x.title||x.text));
+ const tools=(d.tools||[]).filter(Boolean);
+ const hasMeta=[d.sap,d.family,d.application,d.avgTime,d.level].some(Boolean);
+ const imageHeight={small:180,medium:260,large:360}[d.mainImageSize||"medium"]||260;
+ const resultHeight={small:180,medium:260,large:360}[d.resultImageSize||"medium"]||260;
+
+ const metaFields=[
+   ["CÓDIGO SAP",d.sap],["FAMÍLIA",d.family],["APLICAÇÃO",d.application],
+   ["TEMPO MÉDIO",d.avgTime],["NÍVEL",d.level]
+ ].filter(x=>x[1]);
+
+ const metaHtml=hasMeta?`<div class="metaGrid">${metaFields.map(x=>`<div><span>${x[0]}</span><b>${esc(x[1])}</b></div>`).join("")}</div>`:"";
+
+ const descriptionHtml=d.description?`<div class="detailHeroGrid ${d.mainImage?"":"single"}">
+   <div class="panel detailDescription"><h3>DESCRIÇÃO</h3><p>${esc(d.description)}</p></div>
+   ${d.mainImage?`<div class="detailMainImage" style="height:${imageHeight}px"><img src="${d.mainImage}" alt=""></div>`:""}
+ </div>`:
+ (d.mainImage?`<div class="detailHeroGrid single"><div class="detailMainImage" style="height:${imageHeight}px"><img src="${d.mainImage}" alt=""></div></div>`:"");
+
+ const reqHtml=req.length?`<section class="detailSection"><div class="detailSectionTitle"><b>COMPONENTES NECESSÁRIOS</b><span>${req.length} itens</span></div>
+   <div class="detailCards">${req.map((r,i)=>`<div class="techCard"><div class="num">${String(i+1).padStart(2,"0")}</div>${r.image?`<div class="techMedia hasImg"><img src="${r.image}" alt=""></div>`:`<div class="techMedia">${iconSvg("component")}</div>`}<b>${esc(r.name||"Componente")}</b>${r.sap?`<small>${esc(r.sap)}</small>`:""}${r.desc?`<p>${esc(r.desc)}</p>`:""}</div>`).join("")}</div>
+  </section>`:"";
+
+ const stepsHtml=steps.length?`<section class="detailSection"><div class="detailSectionTitle"><b>PASSO A PASSO DE MONTAGEM</b><span>${steps.length} etapas</span></div>
+   <div class="steps">${steps.map((s,i)=>`<div class="step"><div class="stepNo">${String(i+1).padStart(2,"0")}</div><div class="stepBody">${s.title?`<b>${esc(s.title)}</b>`:""}${s.text?`<p>${esc(s.text)}</p>`:""}${s.image?`<img class="stepImage" src="${s.image}" alt="">`:""}</div></div>`).join("")}</div>
+  </section>`:"";
+
+ const checkHtml=checklist.length?`<section class="panel checklist"><h3>CHECKLIST FINAL</h3>${checklist.map(x=>`<label><input type="checkbox"> ${esc(x)}</label>`).join("")}</section>`:"";
+ const errorHtml=errors.length?`<section class="panel errors"><h3>ERROS COMUNS</h3>${errors.map(e=>`<div class="errorItem"><span>×</span><div>${e.title?`<b>${esc(e.title)}</b>`:""}${e.text?`<p>${esc(e.text)}</p>`:""}</div></div>`).join("")}</section>`:"";
+
+ const resultHtml=(d.resultText||d.resultImage)?`<section class="detailSection resultGrid"><div class="panel">${d.resultText?`<h3>RESULTADO FINAL</h3><p>${esc(d.resultText)}</p>`:""}</div>${d.resultImage?`<div class="detailResultImage" style="height:${resultHeight}px"><img src="${d.resultImage}" alt=""></div>`:""}</section>`:"";
+ const toolsHtml=tools.length?`<section class="detailSection"><div class="detailSectionTitle"><b>FERRAMENTAS NECESSÁRIAS</b><span>${tools.length} itens</span></div><div class="toolsRow">${tools.map(t=>`<div class="toolPill">${iconSvg(itemIcon(t,"ferramentas"))}<b>${esc(t)}</b></div>`).join("")}</div></section>`:"";
+ const checklistErrors=(checkHtml||errorHtml)?`<div class="detailTwo">${checkHtml}${errorHtml}</div>`:"";
+
+ document.getElementById("detailContainer").innerHTML=`
+  <div class="detailcrumb">${esc(category)} <span>›</span> ${esc(item)}</div>
+  <div class="detailhead">
+   <div><div class="eyebrow">GUIA TÉCNICO · ${esc(category)}</div><h1 class="pageTitle">${esc(d.title||item)}</h1>${d.description?`<p class="pageSub">${esc(d.description)}</p>`:""}</div>
+   <button class="secondary" id="detailFav">☆ Favoritar</button>
+  </div>
+  ${metaHtml}
+  ${descriptionHtml}
+  ${reqHtml}
+  ${stepsHtml}
+  ${checklistErrors}
+  ${resultHtml}
+  ${toolsHtml}
+ `;
+ document.getElementById("detailFav").onclick=()=>{
+   if(!favorites.includes(item)){favorites.push(item);localStorage.setItem("gt_favs",JSON.stringify(favorites));toast("Adicionado aos favoritos.");}
+   else toast("Este item já está nos favoritos.");
+ };
+}
+const TRAINING_CATALOG_URL="https://stgcs.sharepoint.com/sites/BR03_T_MiB/PreSetNeodent/Portal_Treinamentos/portal_catalogo.json";
+let remoteDocs=[];
+async function loadTrainingCatalog(){
+ try{
+   const r=await fetch(TRAINING_CATALOG_URL+"?t="+Date.now(),{cache:"no-store",credentials:"include"});
+   if(!r.ok) throw new Error("HTTP "+r.status);
+   const txt=await r.text();
+   const arr=JSON.parse(txt);
+   if(!Array.isArray(arr)) throw new Error("Catálogo inválido");
+   remoteDocs=arr.filter(x=>x&&x.name&&x.link).map(x=>{
+     const n=String(x.name);
+     const ext=(n.match(/\.([^.\s]+)$/)||[])[1]||"";
+     const type=ext.toLowerCase()==="pdf"?"PDF":ext?ext.toUpperCase():"ARQUIVO";
+     return {name:n.replace(/\.[^.]+$/,""),type,desc:"Material de treinamento · SharePoint",sharePointUrl:x.link,remote:true};
+   });
+   return true;
+ }catch(e){
+   console.warn("Não foi possível carregar o catálogo do SharePoint:",e);
+   remoteDocs=[];
+   return false;
+ }
+}
+async function docsRender(){
+ const list=document.getElementById("docsList");
+ const ok=await loadTrainingCatalog();
+ const manual=data.docs.filter(d=>!d.remote);
+ const docs=[...remoteDocs,...manual];
+ const status=ok
+   ? `<div class="panel" style="margin-bottom:12px"><b>● Catálogo sincronizado</b><span style="display:block;margin-top:4px;color:var(--muted)">${remoteDocs.length} arquivo(s) encontrado(s) no SharePoint.</span></div>`
+   : `<div class="panel" style="margin-bottom:12px"><b>Catálogo do SharePoint indisponível no momento</b><span style="display:block;margin-top:4px;color:var(--muted)">Os documentos cadastrados manualmente continuam disponíveis.</span></div>`;
+ if(!docs.length){list.innerHTML=status+`<div class="panel">Nenhum documento cadastrado ainda.</div>`;return}
+ list.innerHTML=status+docs.map((d,i)=>`<div class="docrow panel" style="margin-bottom:9px">
+  <div class="docico">${iconSvg("document")}</div>
+  <div style="flex:1"><b>${esc(d.name)}</b><span>${esc(d.type)} · ${esc(d.desc)} · SharePoint</span></div>
+  ${d.sharePointUrl?`<button class="chip" data-openshare="${i}">ABRIR NO SHAREPOINT</button>`:""}
+  ${!d.sharePointUrl&&(d.fileId||d.file)?`<button class="chip" data-openpdf="${i}">ABRIR PDF</button>`:""}
+ </div>`).join("");
+ document.querySelectorAll("[data-openshare]").forEach(b=>b.onclick=()=>{const d=docs[+b.dataset.openshare];if(d?.sharePointUrl)window.open(d.sharePointUrl,"_blank","noopener")});
+ document.querySelectorAll("[data-openpdf]").forEach(b=>b.onclick=async()=>{
+   const d=docs[+b.dataset.openpdf]; if(!d)return;
+   let blob=null;
+   if(d.fileId) blob=await pdfGet(d.fileId);
+   else if(d.file){const r=await fetch(d.file);blob=await r.blob();}
+   if(blob){const url=URL.createObjectURL(blob);window.open(url,"_blank");}
+ });
+}
+function noticesRender(){document.getElementById("noticesList").innerHTML=data.notices.map(n=>`<div class="notice"><b>${esc(n.title)}</b><p>${esc(n.text)}</p></div>`).join("")}
+function favoritesRender(){document.getElementById("favoritesList").innerHTML=favorites.length?favorites.map(x=>`<button class="card"><div class="ico">${iconSvg("favorite")}</div><b>${esc(x)}</b><p>Item salvo nos seus favoritos.</p><small>FAVORITO</small></button>`).join(""):`<div class="panel" style="grid-column:1/-1">Nenhum item favoritado ainda.</div>`}
+function search(q){
+ q=q.trim().toLowerCase();if(!q)return;
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("searchPage").classList.add("active");
+ document.getElementById("searchLabel").textContent=`Resultados para “${q}”`;
+ let arr=[];
+ data.categories.forEach(c=>{
+   if((c.name+" "+c.desc).toLowerCase().includes(q))arr.push({t:c.name,d:c.desc,i:c.icon,type:"category",category:c.name});
+   c.items.forEach(x=>{if(x.toLowerCase().includes(q))arr.push({t:x,d:`Categoria: ${c.name}`,i:itemIcon(x,c.id),type:"item",category:c.name})});
+   Object.entries(c.subpages||{}).forEach(([sp,items])=>{
+     if(sp.toLowerCase().includes(q))arr.push({t:sp,d:`Subpágina: ${c.name}`,i:"subpage",type:"subpage",category:c.name,subpage:sp});
+     (items||[]).forEach(x=>{if(x.toLowerCase().includes(q))arr.push({t:x,d:`Subpágina: ${sp}`,i:itemIcon(x,c.id),type:"item",category:sp,parent:c.name,subpage:sp})});
+   });
+ });
+ Object.entries(PINCES_DATA).forEach(([g,items])=>items.forEach(r=>{if((r[0]+" "+r[1]+" "+r[2]).toLowerCase().includes(q))arr.push({t:r[2],d:`Pinças · ${g==="universal"?"Universais":g==="especial"?"Especiais":"de Itens"}${r[0]?` · Código ${r[0]}`:""}`,i:"zoller",type:"pin",group:g})}));Object.values(data.contents||{}).forEach(x=>{
+   if((x.title+" "+x.sap+" "+x.family+" "+x.description).toLowerCase().includes(q))
+     arr.push({t:x.title,d:`Conteúdo técnico${x.sap?` · SAP ${x.sap}`:""}`,i:"document",type:"content",category:x.family||"Conteúdo técnico"});
+ });
+ const searchDocs=[...(remoteDocs||[]),...data.docs.filter(d=>!d.remote)];
+ searchDocs.forEach((d,i)=>{if((d.name+" "+d.desc+" "+(d.sharePointUrl||"")).toLowerCase().includes(q))arr.push({t:d.name,d:d.desc,i:"document",type:"doc",docIndex:i,remoteDoc:d})});
+
+ document.getElementById("searchResults").innerHTML=arr.length?
+ arr.map((x,i)=>`<button class="card searchResultCard" data-search-index="${i}">
+   <div class="ico">${iconSvg(x.i)}</div><b>${esc(x.t)}</b><p>${esc(x.d)}</p><small>ABRIR →</small>
+ </button>`).join(""):
+ `<div class="panel" style="grid-column:1/-1">Nenhum resultado encontrado.</div>`;
+
+ document.querySelectorAll("[data-search-index]").forEach(b=>{
+   b.onclick=()=>{
+     const x=arr[+b.dataset.searchIndex];
+     if(x.type==="category") go(x.category);
+     else if(x.type==="item" && x.parent) detailRender(x.t,x.subpage);
+     else if(x.type==="item") detailRender(x.t,x.category);
+     else if(x.type==="subpage"){
+       const c=data.categories.find(c=>c.name===x.category);
+       if(c) subpageRender(c,x.subpage);
+     } else if(x.type==="content") detailRender(x.t,x.category);
+     else if(x.type==="pin"){pincesRender(x.group,x.t);}
+     else if(x.type==="doc"){
+       const d=x.remoteDoc || data.docs[x.docIndex];
+       if(d?.sharePointUrl){window.open(d.sharePointUrl,"_blank","noopener");return;}
+       go("Central de Treinamento");
+       setTimeout(()=>{
+         if(d&&d.file){
+           const w=window.open();
+           if(w){w.document.write(`<iframe src="${d.file}" style="position:fixed;inset:0;width:100%;height:100%;border:0"></iframe>`);w.document.close();}
+         }
+       },50);
+     }
+   };
+ });
+}
+document.getElementById("globalSearch").addEventListener("keydown",e=>{if(e.key==="Enter")search(e.target.value)});
+document.getElementById("heroCta").onclick=()=>go("Suportes");
+document.getElementById("favBtn").onclick=()=>go("Favoritos");
+
+const editor=document.getElementById("editor");
+function openAdmin(){document.getElementById("admin").classList.add("open");editorRender("appearance")}
+function editorRender(tab){
+ document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
+ if(tab==="appearance") editor.innerHTML=`
+ <div class="editorgrid">
+ <div class="field"><label>Nome da marca</label><input id="eBrand" value="${esc(data.brand)}"></div>
+ <div class="field"><label>Subtítulo</label><input id="eBrandSub" value="${esc(data.brandSub)}"></div>
+ <div class="field"><label>Responsável</label><input id="eResp" value="${esc(data.responsible)}"></div>
+ <div class="field"><label>Rodapé</label><input id="eFooter" value="${esc(data.footer)}"></div>
+ <div class="field"><label>Versão</label><input id="eVer" value="${esc(data.guide.version)}"></div>
+ <div class="field"><label>Última atualização</label><input id="eUpd" value="${esc(data.guide.updated)}"></div>
+ <div class="field"><label>Status</label><input id="eStatus" value="${esc(data.guide.status)}"></div>
+ <div class="field"><label>Cor principal</label><input id="eColor" type="color" value="#5a2187"></div>
+ </div><div class="adminactions"><button class="save" id="saveAppearance">SALVAR ALTERAÇÕES</button></div>`;
+ else if(tab==="banner") editor.innerHTML=`
+ <div class="editorgrid">
+ <div class="field"><label>Chamada pequena</label><input id="bEye" value="${esc(data.hero.eyebrow)}"></div>
+ <div class="field"><label>Texto do botão</label><input id="bCta" value="${esc(data.hero.cta)}"></div>
+ <div class="field full"><label>Título do banner</label><input id="bTitle" value="${esc(data.hero.title)}"></div>
+ <div class="field full"><label>Texto do banner</label><textarea id="bText">${esc(data.hero.text)}</textarea></div>
+ <div class="field full"><label>Imagem de fundo</label><div class="drop">Escolha qualquer imagem do computador.<br><input id="bImg" type="file" accept="image/*"></div></div>
+ </div><div class="adminactions"><button class="secondary" id="clearImg">Usar fundo sem foto</button><button class="save" id="saveBanner">SALVAR BANNER</button></div>`;
+ else if(tab==="categories") editor.innerHTML=`
+ <div class="editorgrid"><div class="field full"><label>Adicionar categoria</label><div style="display:flex;gap:8px"><input id="newCat" placeholder="Ex.: Procedimentos"><button class="save" id="addCat">ADICIONAR</button></div></div></div>
+ <div style="margin-top:18px">${data.categories.map((c,i)=>`<div class="itemedit"><div class="mini">${esc(c.icon)}</div><div><b>${esc(c.name)}</b><span>${esc(c.desc)} · ${c.items.length} itens</span></div><button class="danger" data-delcat="${i}">Excluir</button></div>`).join("")}</div>`;
+ else if(tab==="contents"){
+ ensureContents();
+ const items=allLeafItems();
+ const sel=window.__contentSelection||items[0]?.name||"";
+ const d=data.contents[sel]||blankContent(sel,"");
+ editor.innerHTML=`
+ <div class="panel"><h3>EDITOR DE CONTEÚDO TÉCNICO</h3><p class="editorHint">Aqui você alimenta cada página exatamente com as informações que aparecem no modelo: código SAP, família, aplicação, tempo, nível, descrição, fotos, componentes, passo a passo, checklist, erros, resultado e ferramentas.</p></div>
+ <div class="editorgrid" style="margin-top:12px">
+  <div class="field full"><label>Conteúdo / item</label><select id="contentSelect">${items.map(x=>`<option value="${esc(x.name)}" ${x.name===sel?"selected":""}>${esc(x.category)} · ${esc(x.name)}</option>`).join("")}</select></div>
+  <div class="field"><label>Título da página</label><input id="cTitle" value="${esc(d.title)}"></div>
+  <div class="field"><label>Código SAP</label><input id="cSap" value="${esc(d.sap)}" placeholder="Ex.: 5251919"></div>
+  <div class="field"><label>Família</label><input id="cFamily" value="${esc(d.family)}"></div>
+  <div class="field"><label>Aplicação</label><input id="cApplication" value="${esc(d.application)}"></div>
+  <div class="field"><label>Tempo médio</label><input id="cTime" value="${esc(d.avgTime)}" placeholder="Ex.: 3 min"></div>
+  <div class="field"><label>Nível</label><input id="cLevel" value="${esc(d.level)}" placeholder="Ex.: Fácil"></div>
+  <div class="field full"><label>Descrição</label><textarea id="cDesc">${esc(d.description)}</textarea></div>
+  <div class="field"><label>Tamanho das imagens</label><select id="cImageSize">
+  <option value="small" ${d.mainImageSize==="small"?"selected":""}>Pequena</option>
+  <option value="medium" ${(!d.mainImageSize||d.mainImageSize==="medium")?"selected":""}>Média</option>
+  <option value="large" ${d.mainImageSize==="large"?"selected":""}>Grande</option>
+ </select></div>
+ <div class="field"><label>Imagem principal</label><input id="cMainImage" type="file" accept="image/*">${d.mainImage?`<span class="editorHint">Imagem atual cadastrada.</span>`:""}</div>
+ </div>
+ <div class="contentEditor"><h3>COMPONENTES NECESSÁRIOS</h3><div id="requiredRows"></div><button class="secondary" id="addRequired">+ ADICIONAR COMPONENTE</button></div>
+ <div class="contentEditor"><h3>PASSO A PASSO</h3><div id="stepRows"></div><button class="secondary" id="addStep">+ ADICIONAR ETAPA</button></div>
+ <div class="contentEditor"><h3>CHECKLIST FINAL</h3><div id="checkRows"></div><button class="secondary" id="addCheck">+ ADICIONAR ITEM</button></div>
+ <div class="contentEditor"><h3>ERROS COMUNS</h3><div id="errorRows"></div><button class="secondary" id="addError">+ ADICIONAR ERRO</button></div>
+ <div class="editorgrid contentEditor">
+  <div class="field full"><label>Resultado final</label><textarea id="cResult">${esc(d.resultText)}</textarea></div>
+  <div class="field full"><label>Foto do resultado</label><input id="cResultImage" type="file" accept="image/*"></div>
+ </div>
+ <div class="contentEditor"><h3>FERRAMENTAS NECESSÁRIAS</h3><div id="toolRows"></div><button class="secondary" id="addTool">+ ADICIONAR FERRAMENTA</button></div>
+ <div class="adminactions"><button class="save" id="saveContent">SALVAR PÁGINA TÉCNICA</button></div>`;
+ function renderRows(){
+  document.getElementById("requiredRows").innerHTML=(d.required||[]).map((r,i)=>`<div class="repeatRow"><input data-rname="${i}" placeholder="Nome" value="${esc(r.name)}"><input data-rsap="${i}" placeholder="SAP" value="${esc(r.sap)}"><input data-rdesc="${i}" placeholder="Descrição" value="${esc(r.desc)}"><input data-rfile="${i}" type="file" accept="image/*"><button class="danger" data-rdel="${i}">×</button></div>`).join("");
+  document.getElementById("stepRows").innerHTML=(d.steps||[]).map((s,i)=>`<div class="repeatRow stepRow"><b style="font-size:9px;padding-top:8px">Etapa ${i+1}</b><input data-stitle="${i}" placeholder="Título da etapa" value="${esc(s.title)}"><textarea data-stext="${i}" placeholder="O que fazer?">${esc(s.text)}</textarea><input data-sfile="${i}" type="file" accept="image/*"><button class="danger" data-sdel="${i}">×</button></div>`).join("");
+  document.getElementById("checkRows").innerHTML=(d.checklist||[]).map((x,i)=>`<div class="repeatRow" style="grid-template-columns:1fr auto"><input data-check="${i}" value="${esc(x)}" placeholder="Ex.: Componentes conferidos"><button class="danger" data-checkdel="${i}">×</button></div>`).join("");
+  document.getElementById("errorRows").innerHTML=(d.errors||[]).map((e,i)=>`<div class="repeatRow" style="grid-template-columns:1fr 2fr auto"><input data-ename="${i}" value="${esc(e.title)}" placeholder="Erro"><input data-etext="${i}" value="${esc(e.text)}" placeholder="Como identificar/corrigir"><button class="danger" data-edel="${i}">×</button></div>`).join("");
+  document.getElementById("toolRows").innerHTML=(d.tools||[]).map((x,i)=>`<div class="repeatRow" style="grid-template-columns:1fr auto"><input data-tool="${i}" value="${esc(x)}" placeholder="Ex.: Chave Allen"><button class="danger" data-tooldel="${i}">×</button></div>`).join("");
+  document.querySelectorAll("[data-rdel]").forEach(b=>b.onclick=()=>{d.required.splice(+b.dataset.rdel,1);renderRows()});
+  document.querySelectorAll("[data-sdel]").forEach(b=>b.onclick=()=>{d.steps.splice(+b.dataset.sdel,1);renderRows()});
+  document.querySelectorAll("[data-checkdel]").forEach(b=>b.onclick=()=>{d.checklist.splice(+b.dataset.checkdel,1);renderRows()});
+  document.querySelectorAll("[data-edel]").forEach(b=>b.onclick=()=>{d.errors.splice(+b.dataset.edel,1);renderRows()});
+  document.querySelectorAll("[data-tooldel]").forEach(b=>b.onclick=()=>{d.tools.splice(+b.dataset.tooldel,1);renderRows()});
+ }
+ renderRows();
+ document.getElementById("contentSelect").onchange=e=>{window.__contentSelection=e.target.value;editorRender("contents")};
+ document.getElementById("addRequired").onclick=()=>{d.required.push({name:"",sap:"",desc:"",image:""});renderRows()};
+ document.getElementById("addStep").onclick=()=>{d.steps.push({title:"",text:"",image:""});renderRows()};
+ document.getElementById("addCheck").onclick=()=>{d.checklist.push("");renderRows()};
+ document.getElementById("addError").onclick=()=>{d.errors.push({title:"",text:""});renderRows()};
+ document.getElementById("addTool").onclick=()=>{d.tools.push("");renderRows()};
+ document.getElementById("saveContent").onclick=async()=>{
+  const key=document.getElementById("contentSelect").value;
+  const n={...d,title:cTitle.value,sap:cSap.value,family:cFamily.value,application:cApplication.value,avgTime:cTime.value,level:cLevel.value,description:cDesc.value,resultText:cResult.value,mainImageSize:cImageSize.value,resultImageSize:cImageSize.value};
+  const main=await fileToData(cMainImage.files[0]); if(main)n.mainImage=main;
+  const req=d.required.map((r,i)=>({...r,name:document.querySelector(`[data-rname="${i}"]`)?.value||"",sap:document.querySelector(`[data-rsap="${i}"]`)?.value||"",desc:document.querySelector(`[data-rdesc="${i}"]`)?.value||""}));
+  for(let i=0;i<req.length;i++){const f=document.querySelector(`[data-rfile="${i}"]`)?.files[0];const im=await fileToData(f);if(im)req[i].image=im}
+  n.required=req;
+  n.steps=d.steps.map((s,i)=>({...s,title:document.querySelector(`[data-stitle="${i}"]`)?.value||"",text:document.querySelector(`[data-stext="${i}"]`)?.value||""}));
+  for(let i=0;i<n.steps.length;i++){const f=document.querySelector(`[data-sfile="${i}"]`)?.files[0];const im=await fileToData(f);if(im)n.steps[i].image=im}
+  n.checklist=d.checklist.map((_,i)=>document.querySelector(`[data-check="${i}"]`)?.value||"").filter(Boolean);
+  n.errors=d.errors.map((_,i)=>({title:document.querySelector(`[data-ename="${i}"]`)?.value||"",text:document.querySelector(`[data-etext="${i}"]`)?.value||""})).filter(x=>x.title||x.text);
+  n.tools=d.tools.map((_,i)=>document.querySelector(`[data-tool="${i}"]`)?.value||"").filter(Boolean);
+  const ri=await fileToData(cResultImage.files[0]); if(ri)n.resultImage=ri;
+  data.contents[key]=n; save(); editorRender("contents"); toast("Página técnica salva.");
+ };
+}
+ else if(tab==="features") editor.innerHTML=`
+ <div class="editorgrid">${data.features.map((f,i)=>`<div class="field"><label>Destaque ${i+1}</label><input data-f-title="${i}" value="${esc(f.title)}"><textarea data-f-text="${i}">${esc(f.text)}</textarea></div>`).join("")}</div><div class="adminactions"><button class="save" id="saveFeatures">SALVAR DESTAQUES</button></div>`;
+ else if(tab==="docs") editor.innerHTML=`
+ <div class="panel"><h3>CENTRAL DE TREINAMENTO</h3><p style="font-size:11px;color:var(--muted)">Os treinamentos podem ser armazenados no SharePoint. Informe o link do arquivo para o portal abrir o documento diretamente no SharePoint. Também é possível manter um PDF local no navegador como alternativa.</p></div>
+ <div class="editorgrid" style="margin-top:12px">
+  <div class="field"><label>Nome do documento</label><input id="dName" placeholder="Ex.: Treinamento Zoller"></div>
+  <div class="field"><label>Descrição</label><input id="dDesc" placeholder="Descrição curta"></div>
+  <div class="field full"><label>Link do SharePoint</label><input id="dShare" type="url" placeholder="Cole aqui o link Copiar link do SharePoint"></div>
+  <div class="field"><label>Arquivo PDF local (opcional)</label><input id="dFile" type="file" accept="application/pdf,.pdf"></div>
+ </div>
+ <div class="adminactions"><button class="save" id="addDoc">ADICIONAR DOCUMENTO</button></div>
+ <div style="margin-top:15px">${data.docs.map((d,i)=>`<div class="itemedit"><div class="mini">${iconSvg("document")}</div><div><b>${esc(d.name)}</b><span>${esc(d.type)} · ${esc(d.desc)}${d.sharePointUrl?" · SharePoint":""}</span></div>${d.sharePointUrl?`<button class="chip" data-openshare-admin="${i}">SHAREPOINT</button>`:""}${!d.sharePointUrl&&(d.fileId||d.file)?`<button class="chip" data-openpdf-admin="${i}">ABRIR</button>`:""}<button class="danger" data-deldoc="${i}">Excluir</button></div>`).join("")}</div>`;
+else if(tab==="notices") editor.innerHTML=`
+ <div class="editorgrid"><div class="field"><label>Título</label><input id="nTitle"></div><div class="field"><label>Texto</label><textarea id="nText"></textarea></div></div><div class="adminactions"><button class="save" id="addNotice">PUBLICAR AVISO</button></div><div style="margin-top:15px">${data.notices.map((n,i)=>`<div class="itemedit"><div class="mini">${iconSvg("notice")}</div><div><b>${esc(n.title)}</b><span>${esc(n.text)}</span></div><button class="danger" data-delnotice="${i}">Excluir</button></div>`).join("")}</div>`;
+ else if(tab==="backup") editor.innerHTML=`
+ <div class="panel"><h3>PORTABILIDADE</h3><p style="font-size:10px;color:var(--muted)">Tudo que você cadastrar neste protótipo fica no navegador. Use exportar para levar o conteúdo para outro computador e importar depois.</p><div class="adminactions" style="justify-content:flex-start"><button class="save" id="export">EXPORTAR CONFIGURAÇÃO</button><label class="secondary" style="cursor:pointer">IMPORTAR <input id="import" type="file" accept=".json" style="display:none"></label><button class="secondary" id="reset">RESTAURAR MODELO</button></div></div>
+ <div class="panel" style="margin-top:12px"><h3>PRONTO PARA EVOLUIR</h3><p style="font-size:10px;color:var(--muted)">A estrutura já separa conteúdo, aparência, categorias, documentos e avisos. Para uso corporativo multiusuário, a próxima etapa é ligar isso a banco de dados, autenticação e armazenamento compartilhado.</p></div>`;
+ bindEditor(tab);
+}
+function bindEditor(tab){
+ if(tab==="appearance")document.getElementById("saveAppearance").onclick=()=>{data.brand=eBrand.value;data.brandSub=eBrandSub.value;data.responsible=eResp.value;data.footer=eFooter.value;data.guide.version=eVer.value;data.guide.updated=eUpd.value;data.guide.status=eStatus.value;save()};
+ if(tab==="banner"){document.getElementById("clearImg").onclick=()=>{data.hero.image="";save();editorRender("banner")};document.getElementById("saveBanner").onclick=()=>{data.hero.eyebrow=bEye.value;data.hero.title=bTitle.value;data.hero.text=bText.value;data.hero.cta=bCta.value;const f=bImg.files[0];if(f){const r=new FileReader();r.onload=()=>{data.hero.image=r.result;save();editorRender("banner")};r.readAsDataURL(f)}else{save();editorRender("banner")}}}
+ if(tab==="categories"){document.getElementById("addCat").onclick=()=>{let n=newCat.value.trim();if(n){data.categories.push({id:"c"+Date.now(),name:n,icon:"◇",desc:"Nova categoria técnica.",tag:"Conteúdo",items:["Novo conteúdo"]});save();editorRender("categories")}};document.querySelectorAll("[data-delcat]").forEach(b=>b.onclick=()=>{data.categories.splice(+b.dataset.delcat,1);save();editorRender("categories")})}
+ if(tab==="features")document.getElementById("saveFeatures").onclick=()=>{data.features.forEach((f,i)=>{f.title=document.querySelector(`[data-f-title="${i}"]`).value;f.text=document.querySelector(`[data-f-text="${i}"]`).value});save()};
+ if(tab==="docs"){
+ document.getElementById("addDoc").onclick=async()=>{
+  const name=dName.value.trim(), file=dFile.files[0], sharePointUrl=dShare.value.trim();
+  if(!name){toast("Informe o nome do documento.");return}
+  if(!sharePointUrl && !file){toast("Cole o link do SharePoint ou selecione um PDF local.");return}
+  try{
+   let fileId="";
+   if(file){fileId="pdf_"+Date.now()+"_"+Math.random().toString(36).slice(2);await pdfPut(fileId,file);}
+   data.docs.push({name,type:"PDF",desc:dDesc.value.trim()||"Material de treinamento.",sharePointUrl,fileId});
+   save();editorRender("docs");docsRender();toast(sharePointUrl?"Documento do SharePoint adicionado.":"PDF salvo.");
+  }catch(e){console.error(e);toast("Não foi possível adicionar o documento.");}
+ };
+ document.querySelectorAll("[data-deldoc]").forEach(b=>b.onclick=async()=>{
+   const d=data.docs[+b.dataset.deldoc];
+   if(d&&d.fileId)await pdfDelete(d.fileId);
+   data.docs.splice(+b.dataset.deldoc,1);save();editorRender("docs");docsRender();
+ });
+ document.querySelectorAll("[data-openshare-admin]").forEach(b=>b.onclick=()=>{
+   const d=data.docs[+b.dataset.openshareAdmin];
+   if(d?.sharePointUrl) window.open(d.sharePointUrl,"_blank","noopener");
+ });
+ document.querySelectorAll("[data-openpdf-admin]").forEach(b=>b.onclick=async()=>{
+   const d=data.docs[+b.dataset.openpdfAdmin];if(!d)return;
+   let blob=null;
+   if(d.fileId) blob=await pdfGet(d.fileId);
+   else if(d.file){const r=await fetch(d.file);blob=await r.blob();}
+   if(blob){const url=URL.createObjectURL(blob);window.open(url,"_blank");}
+ });
+}
+ if(tab==="notices"){document.getElementById("addNotice").onclick=()=>{if(nTitle.value.trim()){data.notices.unshift({title:nTitle.value,text:nText.value});save();editorRender("notices")}};document.querySelectorAll("[data-delnotice]").forEach(b=>b.onclick=()=>{data.notices.splice(+b.dataset.delnotice,1);save();editorRender("notices")})}
+ if(tab==="backup"){document.getElementById("export").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="guia-tecnico-config.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};document.getElementById("import").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();editorRender("appearance")}catch{toast("Arquivo inválido.")}};r.readAsText(f)};document.getElementById("reset").onclick=()=>{if(confirm("Restaurar o modelo inicial?")){data=structuredClone(DEFAULT);save();editorRender("appearance")}}}
+}
+document.getElementById("adminBtn").onclick=openAdmin;document.getElementById("closeAdmin").onclick=()=>document.getElementById("admin").classList.remove("open");document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>editorRender(t.dataset.tab));
+render();
+</script>
+</body>
+</html>
