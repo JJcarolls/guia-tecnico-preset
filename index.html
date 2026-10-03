@@ -368,7 +368,11 @@ function migrateTnl12SupportImages(){
  const c=data.categories.find(x=>x.id==="suportes");
  if(c){
   if(!c.subpages)c.subpages={};
-  c.subpages["TNL 12.1/2"]=names;
+   // Preserva os cadastros criados manualmente dentro do TNL 12.1/2.
+   // A base técnica apenas garante os itens originais; não sobrescreve o que o usuário criou.
+   const currentTnl=Array.isArray(c.subpages["TNL 12.1/2"])?c.subpages["TNL 12.1/2"]:[];
+   const mergedTnl=[...names,...currentTnl].filter((x,i,a)=>x&&a.findIndex(y=>normText(y)===normText(x))===i);
+   c.subpages["TNL 12.1/2"]=mergedTnl;
   if(c.subpages["Conjuntos"] && !c.subpages["Adaptador WFS"]) c.subpages["Adaptador WFS"]=c.subpages["Conjuntos"];
   if(!c.subpages["Adaptador WFS"]) c.subpages["Adaptador WFS"]=["G1 (ER16)","G2 (ER16)","G3 (ER16)","P1 (ER11)","P2 (ER11)","C1 (7MM)","C2 (7MM)","C3 (8MM)","C4 (10MM)","R1 (10MM)","R2 (8MM)","i1","i1L","i2"];
   c.subpages["Conjuntos"]=[];
