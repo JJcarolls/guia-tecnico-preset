@@ -337,6 +337,8 @@ migrateStructure();
 function migrateSupportPptImages(){
   if(!data.contents) data.contents={};
   Object.entries(SUPPORT_PPT_IMAGES).forEach(([name,imgs])=>{
+    const deleted=Array.isArray(data.deletedTnl12SupportNames)?data.deletedTnl12SupportNames:[];
+    if(deleted.some(x=>normText(x)===normText(name))){ delete data.contents[name]; return; }
     const d=data.contents[name]||blankContent(name,"Suportes");
     d.title=name;
     if(!d.mainImage && imgs[0]) d.mainImage=imgs[0];
@@ -652,8 +654,9 @@ function subpageRender(parent,name){
    const supportNames=(typeof TNL12_SUPPORT_IMAGES!=="undefined" && Array.isArray(TNL12_SUPPORT_IMAGES))?TNL12_SUPPORT_IMAGES.map(x=>x.name):[];
    const deletedSupportNames=Array.isArray(data.deletedTnl12SupportNames)?data.deletedTnl12SupportNames:[];
    const isDeletedSupport=name=>deletedSupportNames.some(x=>normText(x)===normText(name));
+   const customNames=(Array.isArray(parent.subpages?.[name])?parent.subpages[name]:[]);
    const embeddedNames=Object.keys(data.contents||{}).filter(k=>data.contents[k]&&data.contents[k].supportCode);
-   const merged=[...supportNames,...embeddedNames].filter((x,i,a)=>x&&a.indexOf(x)===i&&!isDeletedSupport(x));
+   const merged=[...supportNames,...customNames,...embeddedNames].filter((x,i,a)=>x&&a.indexOf(x)===i&&!isDeletedSupport(x));
    if(merged.length) items=merged;
  }
  const logisticGroups=new Set(["Insertos","Brocas","Fresas","Alargadores","Cossinete"]);
