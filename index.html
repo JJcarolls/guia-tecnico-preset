@@ -652,6 +652,22 @@ function subpageRender(parent,name){
  document.getElementById("subpageBackBtn").onclick=()=>categoryRender(parent);
  document.getElementById("catSub").textContent=`${parent.name} · subpágina técnica`;
  let items=(parent.subpages&&parent.subpages[name])||[];
+ // Cadastros vindos do portal_cadastro.json entram dinamicamente no subgrupo
+ // correspondente. Isso vale para Suportes, Componentes e Logística Preset.
+ const remoteNamesForPage=(Array.isArray(remoteCadastro)?remoteCadastro:[])
+   .filter(r=>remoteBelongsToSubpage(r,parent,name))
+   .filter(r=>{
+      const n=String(r.descricao||"").trim();
+      if(!n)return false;
+      if(normText(name)==="tnl 12.1/2"){
+        const deleted=Array.isArray(data.deletedTnl12SupportNames)?data.deletedTnl12SupportNames:[];
+        if(deleted.some(x=>normText(x)===normText(n)))return false;
+      }
+      return true;
+   })
+   .map(r=>String(r.descricao||"").trim());
+ items=[...(Array.isArray(items)?items:[]),...remoteNamesForPage]
+   .filter((x,i,a)=>x&&a.findIndex(y=>normText(y)===normText(x))===i);
  // Suportes: TNL 12.1/2 usa a base técnica com imagens incorporadas.
  // Se a estrutura antiga estiver apontando para a própria subpágina, reconstruímos a lista pelos conteúdos com código de suporte.
  if(parent.id==="suportes" && String(name).trim()==="TNL 12.1/2"){
@@ -660,7 +676,11 @@ function subpageRender(parent,name){
    const isDeletedSupport=name=>deletedSupportNames.some(x=>normText(x)===normText(name));
    const customNames=(Array.isArray(parent.subpages?.[name])?parent.subpages[name]:[]);
    const embeddedNames=Object.keys(data.contents||{}).filter(k=>data.contents[k]&&data.contents[k].supportCode);
-   const merged=[...supportNames,...customNames,...embeddedNames].filter((x,i,a)=>x&&a.indexOf(x)===i&&!isDeletedSupport(x));
+   const remoteNames=(Array.isArray(remoteCadastro)?remoteCadastro:[])
+      .filter(r=>normText(r.subfamilia)==="tnl 12.1/2")
+      .map(r=>String(r.descricao||"").trim())
+      .filter(Boolean);
+    const merged=[...supportNames,...customNames,...embeddedNames,...remoteNames].filter((x,i,a)=>x&&a.findIndex(y=>normText(y)===normText(x))===i&&!isDeletedSupport(x));
    if(merged.length) items=merged;
  }
  const logisticGroups=new Set(["Insertos","Brocas","Fresas","Alargadores","Cossinete"]);
@@ -784,7 +804,25 @@ function fileToData(file){
  return new Promise((resolve,reject)=>{
    if(!file){resolve("");return}
    const r=new FileReader();
-   r.onload=()=>resolve(r.result);
+   r.onload=()=>{
+     const src=String(r.result||"");
+     const img=new Image();
+     img.onload=()=>{
+       const max=1600;
+       const iw=img.naturalWidth||img.width||1, ih=img.naturalHeight||img.height||1;
+       const scale=Math.min(1,max/Math.max(iw,ih));
+       const w=Math.max(1,Math.round(iw*scale)), h=Math.max(1,Math.round(ih*scale));
+       const c=document.createElement("canvas");
+       c.width=w;c.height=h;
+       const ctx=c.getContext("2d");
+       if(!ctx){resolve(src);return}
+       ctx.drawImage(img,0,0,w,h);
+       const out=c.toDataURL("image/jpeg",0.82);
+       resolve(out&&out.length<src.length?out:src);
+     };
+     img.onerror=()=>resolve(src);
+     img.src=src;
+   };
    r.onerror=reject;
    r.readAsDataURL(file);
  });
@@ -1016,7 +1054,12 @@ function portalImageUrl(value){
   return SHAREPOINT_BASE_URL+"/"+clean.split("/").map(encodeURIComponent).join("/");
 }
 function canonicalRemoteSubgroup(value){
-  const n=normText(value);
+  const raw=String(value??"").trim();
+  const n=normText(raw);
+  if(["tnl 12.1/2","tnl 12 1/2","tnl 12.1 2","tnl12.1/2","tnl12 1/2"].includes(n))return "TNL 12.1/2";
+  if(["tnl 18/20b","tnl 18 20b","tnl18/20b"].includes(n))return "TNL 18/20B";
+  if(["adaptador wfs"].includes(n))return "Adaptador WFS";
+  if(["conjuntos","conjunto"].includes(n))return "Conjuntos";
   if(["inserto","insertos"].includes(n))return "Insertos";
   if(["broca","brocas","broca md","broca ar"].includes(n))return "Brocas";
   if(["fresa","fresas"].includes(n))return "Fresas";
@@ -1024,8 +1067,22 @@ function canonicalRemoteSubgroup(value){
   if(n==="cossinete")return "Cossinete";
   if(["chave torx","chaves torx"].includes(n))return "Chaves Torx";
   if(["chave allen","chaves allen"].includes(n))return "Chaves Allen";
-  if(["parafuso porca","parafusos porcas","parafuso-porca"].includes(n))return "Parafusos / Porcas";
-  return String(value||"Diversos").trim()||"Diversos";
+  if(["parafuso porca","parafusos porcas","parafuso-porca","parafusos / porcas"].includes(n))return "Parafusos / Porcas";
+  // Mantém subgrupos que já existem no portal, mesmo quando não estão na lista acima.
+  return raw||"Diversos";
+}
+function remoteCategoryId(record){
+  const n=normText(record?.grupo||record?.familia||"");
+  if(["suportes","suporte"].includes(n))return "suportes";
+  if(["componentes","componente"].includes(n))return "componentes";
+  if(["logistica preset","logistica","logística preset","logística"].includes(n))return "logistica";
+  return "";
+}
+function remoteBelongsToSubpage(record,parent,name){
+  if(!record||!parent)return false;
+  const cat=remoteCategoryId(record);
+  if(cat && cat!==parent.id)return false;
+  return normText(record.subfamilia)===normText(name);
 }
 async function loadPortalCadastro(){
   try{
@@ -1048,6 +1105,30 @@ async function loadPortalCadastro(){
       ordem:x.ordem??null,
       _remote:true
     }));
+    // O JSON remoto é uma fonte dinâmica de cadastros. Ele deve alimentar
+    // o subgrupo correto em memória, sem gravar esses registros no localStorage.
+    // Assim o GitHub sempre reflete o portal_cadastro.json atual e não cria
+    // cadastros remotos antigos ou duplicados no cache do navegador.
+    data.contents=data.contents||{};
+    const deletedTnl=Array.isArray(data.deletedTnl12SupportNames)?data.deletedTnl12SupportNames:[];
+    remoteCadastro.forEach(r=>{
+      const name=String(r.descricao||"").trim();
+      if(!name)return;
+      if(normText(r.subfamilia)==="tnl 12.1/2" && deletedTnl.some(x=>normText(x)===normText(name)))return;
+      const d=data.contents[name]||blankContent(name,r.subfamilia||r.grupo||"Conteúdo técnico");
+      d.title=name;
+      if(r.codigo)d.sap=r.codigo;
+      if(r.familia)d.family=r.familia;
+      if(r.imagem)d.mainImage=r.imagem;
+      if(r.conteudo && typeof r.conteudo==="object")Object.assign(d,r.conteudo);
+      d.title=name;
+      if(r.codigo)d.sap=r.codigo;
+      if(r.familia)d.family=r.familia;
+      if(r.imagem)d.mainImage=r.imagem;
+      d.description=d.description||name;
+      data.contents[name]=d;
+    });
+
     console.info("Portal Cadastro carregado:",remoteCadastro.length,"registro(s)");
     return true;
   }catch(e){
@@ -1192,7 +1273,9 @@ function search(q){
    if(/^\d+(?:[.,]\d+)?$/.test(raw) && pinNumber===normalizeNumber(raw)) score+=25;
    if(score>0) arr.push({t:r.descricao,d:`Pinças · ${r.subfamilia||r.grupo||""}${pinNumber?` · Nº ${pinNumber}`:""}${diameter?` · Diâmetro ${diameter}`:""}${r.codigo?` · Código ${r.codigo}`:""}`,i:"zoller",type:"pin",group:r.grupo,query:q,_score:score});
  });
- const toolSearchRows=[...(data.ferramentas||[]),...remoteCadastro];
+ const deletedTnlForSearch=Array.isArray(data.deletedTnl12SupportNames)?data.deletedTnl12SupportNames:[];
+  const remoteCadastroVisivel=remoteCadastro.filter(r=>!(normText(r.subfamilia)==="tnl 12.1/2" && deletedTnlForSearch.some(x=>normText(x)===normText(r.descricao))));
+  const toolSearchRows=[...(data.ferramentas||[]),...remoteCadastroVisivel];
  const toolSeen=new Set();
  toolSearchRows.forEach(r=>{
    const code=String(r.codigo??"").trim();
